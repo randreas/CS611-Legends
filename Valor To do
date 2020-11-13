@@ -1,0 +1,38 @@
+Classes to add:
+ValorGame.java
+Create new map
+Spawn monsters and heroes
+Gamemovement
+    Attack
+    Spell
+         Choose monster in range, attack/spell cast
+    Teleport
+        Choose lane to teleport, keep track of original location. If not from og lane, tp again calculate
+    Back
+         Go back to base, enter market
+    Move
+         Check whether valid move.
+MonsterRound
+RoundResult
+    Wincondition
+    Losecondition
+    Tie.  If both win n lose, tie
+
+New Space 1
+New Space 2
+NexusSpace.java
+ValorMap.java
+ValorPlayer.java
+ValorMapLane.java
+ValorMapLaneRow.java
+IsBuffableSpace.java interface
+
+
+Extra Credit
+Varying number lanes
+Varying Size of Lane
+Play with 2 people 
+Add color coding
+Add sound
+Add ascii art
+Parse using parser
