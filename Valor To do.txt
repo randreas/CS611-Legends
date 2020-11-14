@@ -18,7 +18,7 @@ RoundResult
     Losecondition
     Tie.  If both win n lose, tie
 
-BushSpace.java
+BushSpace.java 
 	- implements is IsBuffableSpace.java 
 CaveSpace.java
 	- implements is IsBuffableSpace.java 
