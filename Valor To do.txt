@@ -32,7 +32,7 @@ NexusSpace.java
 ValorMap.java
 	- Array of ValorMapLane
 
-ValorPlayer.java
+ValorPlayer.java 
 	- hashMap[Player, int originalLane]
 
 ValorMapLane.java
