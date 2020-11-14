@@ -1,15 +1,15 @@
 Classes to add:
 ValorGame.java
 Create new map
-Spawn monsters and heroes
+Spawn monsters and heroes on map
 Gamemovement
     Attack
     Spell
          Choose monster in range, attack/spell cast
     Teleport
-        Choose lane to teleport, keep track of original location. If not from og lane, tp again calculate
+        Choose lane to teleport, keep track of original location. If not from og lane, tp again calculate?
     Back
-         Go back to base, enter market
+         Go back to base, enter market?
     Move
          Check whether valid move.
 MonsterRound
@@ -18,13 +18,27 @@ RoundResult
     Losecondition
     Tie.  If both win n lose, tie
 
-New Space 1
-New Space 2
+BushSpace.java
+	- implements is IsBuffableSpace.java 
+CaveSpace.java
+	- implements is IsBuffableSpace.java 
+KoulouSpace.java 
+	- implements is IsBuffableSpace.java 
+PlainSpace.java
+	
 NexusSpace.java
+	- has a market space
+
 ValorMap.java
+	- Array of ValorMapLane
+
 ValorPlayer.java
+	- hashMap[Player, int originalLane]
+
 ValorMapLane.java
+	- Array of ValorMapLaneRow
 ValorMapLaneRow.java
+	- array of Space
 IsBuffableSpace.java interface
 
 
