@@ -3,6 +3,9 @@ ValorGame.java
 Create new map
 Spawn monsters and heroes on map
 Gamemovement
+    Use Potion
+    Equip Item
+    Check Hero
     Attack
     Spell
          Choose monster in range, attack/spell cast
