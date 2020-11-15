@@ -157,5 +157,10 @@ public class ValorMap extends GridMap {
 		this.numLanes = numLanes;
 	}
 	
-	
+	/*
+	 * Function that calls actions when a hero steps onto that cell.
+	 */
+	public void mapAction() {
+		//TODO: implement code
+	}
 }
