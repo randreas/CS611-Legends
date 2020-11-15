@@ -777,4 +777,123 @@ public class ioUtility {
 	}
 	
 	
+	public  String getOuterCellStr(char c){
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < 2; i++) {
+            str.append(c).append(" - ");
+        }
+        str.append(c).append("   ");
+        return str.toString();
+    }
+
+    public  String getInnerCellStr(String component){
+        return "| " + component + " |   ";
+    }
+    
+	public String getCellComponent(ValorMap map, int row, int col){
+		ValorSpace space = (ValorSpace) map.getMap()[row][col];
+		ArrayList<Character> chars = space.getChars();
+		if(chars.size() == 0) {
+			return "     ";
+		}
+		int emptySpace = 5;
+		String ret = "";
+		for(Character c : chars) {
+			if(c instanceof Hero) {
+				ret += "H";
+			} else {
+				ret += "M";
+			}
+			emptySpace--;
+		}
+		
+	    for(int i = 0; i < emptySpace; i++) {
+	    	ret += " ";
+	    }
+	    
+	    return ret;
+    }
+	
+	public void createInnerCell(ValorMap map, List<StringBuilder> printableMap, int row, int col) {
+		String component = getCellComponent(map,row/3, col);
+        if (map.getMap()[row/3][col] instanceof InaccessibleSpace)
+            component = "X X X";
+        printableMap.get(row).append(getInnerCellStr(component));
+    }
+	
+	public  void createOutterCell(ValorMap map, List<StringBuilder> printableMap, int row, int col) {
+        Space s = map.getMap()[row/3][col];
+        
+        if(s instanceof NexusSpace) {
+        
+        	printableMap.get(row).append(getOuterCellStr('N'));
+        
+        } else if(s instanceof PlainSpace) {
+       	 	
+        	printableMap.get(row).append(getOuterCellStr('P'));
+        
+        } else if(s instanceof KoulouSpace) {
+        	
+        	printableMap.get(row).append(getOuterCellStr('K'));
+        
+        } else if(s instanceof BushSpace) {
+        	
+        	printableMap.get(row).append(getOuterCellStr('B'));
+        
+        } else if(s instanceof CaveSpace) {
+        	
+        	printableMap.get(row).append(getOuterCellStr('C'));
+        
+        } else if(s instanceof InaccessibleSpace) {
+        	
+        	printableMap.get(row).append(getOuterCellStr('#'));
+        
+        }
+		
+        
+    }
+	
+	public void printFullValorMap(ValorMap map) {
+		int numCols = map.getCols();
+		int numRows = map.getRows();
+		List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
+
+        for (int row = 0; row < numRows * 3; row++) {
+            printableMap.add(new StringBuilder());
+            if ((row / 3) % 2 == 0){
+                for (int col = 0; col < map.getCols(); col++) {
+                    if (row % 2 == 0){
+                        createOutterCell(map, printableMap, row, col);
+                    }else{
+                        createInnerCell(map, printableMap, row, col);
+                    }
+
+                    if (col == numCols - 1) {
+                        printableMap.get(row).append("\n");
+                    }
+                } 
+            } else{
+                for (int col = 0; col < numCols; col++) {
+                    if (row % 2 == 1){
+                        createOutterCell(map, printableMap, row, col);
+                    }else{
+                        createInnerCell(map, printableMap, row, col);
+                    }
+
+                    if (col == numCols - 1)
+                        printableMap.get(row).append("\n");
+                }
+            }
+
+            if (row % 3 == 2) {
+                printableMap.get(row).append("\n");
+            }
+        }
+        
+        for (int i = 0; i <numRows * 3; i++) {
+            System.out.print(printableMap.get(i));
+        }
+	}
+	
+	
 }

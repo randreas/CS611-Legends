@@ -32,7 +32,7 @@ public class ValorMap extends GridMap {
 			
 			nextLaneSep += laneSize+1;
 			for(int j = 0; j < getRows(); j++) {
-				getMap()[j][i] = new BlockedSpace(j, i);
+				getMap()[j][i] = new InaccessibleSpace(j, i);
 			}
 		}
 		

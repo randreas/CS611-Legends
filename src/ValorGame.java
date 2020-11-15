@@ -56,6 +56,7 @@ public class ValorGame extends RPGGame {
 		ValorMap map = new ValorMap();
 		super.setMap(map);
 		map.printMap();
+		io.printFullValorMap(map);
 
 		
 		

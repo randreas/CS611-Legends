@@ -16,5 +16,10 @@ public abstract class ValorSpace extends Space{
 	public void exitSpace(Character c) {
 		
 	}
+	
+	public ArrayList<Character> getChars() {
+		return this.chars;
+	}
+
 
 }
