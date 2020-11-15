@@ -1,4 +1,3 @@
 
-public class ValorMap {
-
+public class ValorMap extends GridMap{
 }

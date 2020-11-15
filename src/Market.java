@@ -105,6 +105,7 @@ public class Market {
 						System.out.println("Unable to purchase weapon." + h.getName() + " Does not have enough funds");
 					} else {
 						if(item instanceof Weapon || item instanceof Armor || item instanceof Spell) {
+							//TODO FIX Repeatable items buying
 							if(h.getInventory().getWeaponList().contains(item) || h.getInventory().getArmorList().contains(item)
 									|| h.getInventory().getSpellList().contains(item)) {
 								System.out.println("You have purchased this equipment. You do not need more");

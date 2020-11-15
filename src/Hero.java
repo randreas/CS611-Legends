@@ -282,6 +282,34 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 	}
 	
 	/*
+	 * Function to decrease the stats for a hero by amount
+	 */
+	public void decreaseStats(StatType type, int amount) {
+		switch(type) {
+		case AGILITY:
+			setAgility(getAgility() - amount);
+			break;
+		case DEFENSE:
+			setDefense(getDefense() - amount);
+			break;
+		case DEXTERITY:
+			setDexterity(getDexterity() - amount);
+			break;
+		case HEALTH:
+			setHp(getHp() - amount);
+			break;
+		case MANA:
+			setMana(getMana() - amount);
+			break;
+		case STRENGTH:
+			setStrength(getStrength() - amount);
+			break;
+		
+		}
+		
+	}
+	
+	/*
 	 * Function to equip/unequip an item 
 	 */
 	public boolean equipOrUnequip(String res) {

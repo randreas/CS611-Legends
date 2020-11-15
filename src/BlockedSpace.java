@@ -5,7 +5,6 @@ public class BlockedSpace extends Space {
 
 	public BlockedSpace(int row, int col) {
 		super("#", row, col);
-		// TODO Auto-generated constructor stub
 	}
 	
 }
