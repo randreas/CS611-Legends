@@ -15,9 +15,27 @@ public class ValorGame extends RPGGame {
 	private int numRound = 1;
 	private List<Monster> monsterOnMap;
 	
+	/*
+	 * Function to start the game
+	 */
 	public void startGame() {
 		//TODO: implement code
 		
+	}
+	
+	
+	/*
+	 * Function to initialize player
+	 */
+	public void initializePlayer() {
+		//TODO: implement code
+	}
+	
+	/*
+	 * Function to chooseHeros to add into player
+	 */
+	public void chooseHeros() {
+	//TODO: implement code
 	}
 	
 	public void gameRound() {
