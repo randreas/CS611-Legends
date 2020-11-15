@@ -1,7 +1,7 @@
 /*
  * BushSpace.java - class that creates a bush space that buffs heroes dexterity
  */
-public class BushSpace  extends Space implements isBuffableSpace{
+public class BushSpace  extends ValorSpace implements isBuffableSpace{
 	private int buffAmount;
 	
 	public BushSpace( int row, int col) {

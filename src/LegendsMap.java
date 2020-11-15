@@ -15,7 +15,6 @@ public class LegendsMap extends GridMap{
 		setRows(8);
 		setCols(8);	
 		
-		
 	}
 	
 	public LegendsMap(int rows, int cols, Inventory itemInven, List<Monster> monsters) {

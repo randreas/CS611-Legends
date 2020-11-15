@@ -1,7 +1,7 @@
 /*
  * KoulouSpace.java - class that creates a koulou space that buffs heroes strength
  */
-public class KoulouSpace extends Space implements isBuffableSpace{
+public class KoulouSpace extends ValorSpace implements isBuffableSpace{
 	
 	private int buffAmount;
 	

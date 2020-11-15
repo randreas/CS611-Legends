@@ -1,7 +1,7 @@
 /*
  * CaveSpace.java - class that creates a cave space that buffs heroes agility
  */
-public class CaveSpace extends Space implements isBuffableSpace{
+public class CaveSpace extends ValorSpace implements isBuffableSpace{
 	private int buffAmount;
 	
 	public CaveSpace( int row, int col) {
@@ -14,6 +14,7 @@ public class CaveSpace extends Space implements isBuffableSpace{
 	public void enterSpaceBuff(Hero h) {
 		this.buffAmount = (int) (h.getAgility()*0.10);
 		h.increaseStats(StatType.AGILITY, buffAmount);
+		
 	}
 	
 	/*

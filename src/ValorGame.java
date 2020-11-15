@@ -37,19 +37,26 @@ public class ValorGame extends RPGGame {
 		super(null,"ValorGame",1);
 		io = new ioUtility();
 		io.printWelcomeMessage();
-		io.playSound("opening");
+		//io.playSound("opening");
 		iconList = new ArrayList<String>();
 		//adding default icons 
 		iconList.add("M");
 		iconList.add("#");
 		iconList.add(" ");
+		iconList.add("P");
+		iconList.add("K");
+		iconList.add("B");
+		iconList.add("C");
 		Parser p = new Parser();
 		warriorList = p.parseWarriors();
 		paladinList = p.parsePaladins();
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
 		
-		
+		ValorMap map = new ValorMap();
+		super.setMap(map);
+		map.printMap();
+
 		
 		
 		
