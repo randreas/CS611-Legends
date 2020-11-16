@@ -22,6 +22,7 @@ public class ValorGame extends RPGGame {
 		initializeMap();
 		io.printFullValorMap((ValorMap) getMap());
 		//TODO: implement code
+		initializePlayer(0);
 		
 	}
 	
@@ -88,15 +89,71 @@ public class ValorGame extends RPGGame {
 	/*
 	 * Function to initialize player
 	 */
-	public void initializePlayer() {
-		//TODO: implement code
+	public ValorPlayer initializePlayer(int i) {
+		System.out.println("Player" + (i+1) + ", please enter your name:");
+		String name = io.parseString();
+		
+		boolean validIcon = false;
+		String icon = "";
+		while(!validIcon) {
+			System.out.println(name +", please enter your desired icon:");
+			icon  = io.parseString();
+			if(icon.length() > 1) {
+				System.err.println(ConsoleColors.RED + "Icon can only 1 character long." + ConsoleColors.RESET);
+				continue;
+			}
+			if(iconList.contains(icon)) {
+				System.out.println(ConsoleColors.RED + "Icon is already selected by another player. Please enter a unique icon" + ConsoleColors.RESET);
+				continue;
+			} else {
+				validIcon = true;
+				iconList.add(icon);
+			}
+		}
+		
+		return new ValorPlayer(name,icon);
+
+	
 	}
 	
 	/*
 	 * Function to chooseHeros to add into player
 	 */
-	public void chooseHeros() {
-	//TODO: implement code
+	public void chooseHeros(ValorPlayer player) {
+		System.out.println(player.getName() +", it is time to build your team, you're just a human so I don\'t think you can defeat these monsters");
+		
+		System.out.println();
+		while(player.getHeroes().size() < numHeroesTeam) {
+			HeroClass chosenHeroClass = io.parseHeroClass();
+			Hero chosenHero = null;
+			int index = -1;
+			switch(chosenHeroClass) {
+			case PALADIN:
+				index = io.parseHeroId(paladinList,chosenHeroClass);
+				chosenHero = paladinList.get(index);
+				paladinList.remove(index);
+				break;
+			case SORCERER:
+				index = io.parseHeroId(sorcererList,chosenHeroClass);
+				chosenHero = sorcererList.get(index);
+				sorcererList.remove(index);
+				break;
+			case WARRIOR:
+				index = io.parseHeroId(warriorList, chosenHeroClass);
+				chosenHero = warriorList.get(index);
+				warriorList.remove(index);
+				break;
+			default:
+				break;
+			}
+			
+			Location loc = io.parseInitalLaneLocation((ValorMap) getMap());
+			ValorSpace s = (ValorSpace) getMap().getMap()[loc.getRow()][loc.getCol()];
+			s.enterSpace(chosenHero);
+			player.addHero(chosenHero,loc);
+		
+			
+		}
 	}
 	
 	public void gameRound() {
