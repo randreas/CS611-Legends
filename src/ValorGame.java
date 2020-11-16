@@ -19,11 +19,72 @@ public class ValorGame extends RPGGame {
 	 * Function to start the game
 	 */
 	public void startGame() {
+		initializeMap();
+		io.printFullValorMap((ValorMap) getMap());
 		//TODO: implement code
 		
 	}
 	
-	
+	public void initializeMap() {
+		String mode;
+		boolean isValid = false;
+		while(!isValid) {
+			System.out.println("Which type of map would you like use?");
+			System.out.println("Default (D) - 8x8 Board, 3 Lanes, 2 cells per lane.");
+			System.out.println("Custom  (C)");
+			mode = io.parseString().toUpperCase();
+			if(mode.equals("D")) {
+				ValorMap map = new ValorMap();
+				super.setMap(map);
+				isValid = true;
+			} else if (mode.equals("C")) {
+				int numLanes = 0;
+				int laneSize = 0;
+				int numRows = 0;
+				boolean isValid2 = false;
+				while(!isValid2) {
+					System.out.println("Configure number of rows. (4-20)");
+					numRows = io.parseInt();
+					if(numRows < 4 || numRows > 20) {
+						io.printErrorParse();
+					} else {
+						isValid2 = true;
+					}
+				}
+				isValid2 = false;
+				while(!isValid2) {
+					System.out.println("Configure number of lanes. (1-5)");
+					numLanes = io.parseInt();
+					if(numLanes < 1 || numLanes > 5) {
+						io.printErrorParse();
+					} else {
+						isValid2 = true;
+					}
+				}
+				isValid2 = false;
+				while(!isValid2) {
+					System.out.println("Configure size of lanes. (1-4)");
+					laneSize = io.parseInt();
+					if(laneSize < 1 || laneSize > 4) {
+						io.printErrorParse();
+					} else {
+						isValid2 = true;
+					}
+				}
+				
+				int numCols = (laneSize*numLanes) + (numLanes-1);
+				ValorMap map = new ValorMap(numRows,numCols,numLanes,laneSize);
+				super.setMap(map);
+				
+				isValid = true;
+			} else {
+				isValid = false;
+			}
+		}
+		
+		
+		
+	}
 	/*
 	 * Function to initialize player
 	 */
@@ -138,10 +199,8 @@ public class ValorGame extends RPGGame {
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
 		
-		ValorMap map = new ValorMap();
-		super.setMap(map);
-		map.printMap();
-		io.printFullValorMap(map);
+		
+		
 
 		
 		

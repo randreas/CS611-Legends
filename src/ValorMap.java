@@ -7,14 +7,14 @@ public class ValorMap extends GridMap {
 	private int numLanes = 3;
 	
 	public ValorMap() {
-		this(8,8);
-		setRows(8);
-		setCols(8);	
-		
+		this(8,8,3,2);	
 	}
 	
-	public ValorMap(int rows, int cols) {
+	
+	public ValorMap(int rows, int cols, int numLanes, int laneSize) {
 		super(rows,cols);
+		this.laneSize = laneSize;
+		this.numLanes = numLanes;
 		//Set first and last row as nexus
 		for(int i = 0; i < getMap()[0].length; i++) {
 			getMap()[0][i] = new NexusSpace(0, i);
