@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ValorGame extends RPGGame {
 	
@@ -13,7 +14,7 @@ public class ValorGame extends RPGGame {
 	private int numHeroesTeam = 3;
 	private List<String> iconList;
 	private int numRound = 1;
-	private List<Monster> monsterOnMap;
+	private List<Monster> monstersOnMap;
 	
 	/*
 	 * Function to start the game
@@ -23,6 +24,8 @@ public class ValorGame extends RPGGame {
 		io.printFullValorMap((ValorMap) getMap());
 		//TODO: implement code
 		initializePlayer(0);
+		gameRound();
+		
 		
 	}
 	
@@ -161,17 +164,19 @@ public class ValorGame extends RPGGame {
 		if(numRound == 1 || numRound % 8 == 0) {
 			spawnMonster();
 		}
-		//TODO: implement code
 		playerTurn();
 		monsterTurn();
-		
-		
-		
 		
 		numRound++;
 		int results = roundResult();
 		if(results == 0) {
 			gameRound();
+		} else if(results == 1) {
+			System.out.println("Player Wins");
+		} else if(results == 2) {
+			System.out.println("Monster Wins");
+		} else {
+			System.out.println("Tie");
 		}
 	}
 	
@@ -180,7 +185,28 @@ public class ValorGame extends RPGGame {
 	 * Find the maxLevel of hero and spawns monsters of that same level on to the map 
 	 */
 	public void spawnMonster() {
-		//TODO: implement code
+		int maxLevel = 0;
+		for(Hero h :playerList.get(0).getHeroes().keySet()) {
+			if(h.getLevel() > maxLevel) {
+				maxLevel = h.getLevel();
+			}
+		}
+		
+		List<Monster> filteredList = new ArrayList<Monster>();
+		for(Monster m : monsters) {
+			if(m.getLevel() == maxLevel) {
+				filteredList.add(m);
+			}
+		}
+		
+		for(int i = 0; i < ((ValorMap)getMap()).getNumLanes(); i++) {
+			Random r = new Random();
+			Monster m = (Monster) filteredList.get(r.nextInt(filteredList.size())).clone();
+			monstersOnMap.add(m);
+			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i);
+			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
+			s.enterSpace(m);
+		}
 	}
 	
 	
@@ -194,7 +220,7 @@ public class ValorGame extends RPGGame {
 	 * Function to automatically call monsters turn
 	 */
 	public void monsterTurn() {
-		for(Monster m : monsterOnMap) {
+		for(Monster m : monstersOnMap) {
 			ArrayList<Hero> heroesAvailable = checkMonsterVicinity(m);
 			if(heroesAvailable.size() == 0) {
 				//if no available heroes to attack, move forward
@@ -231,8 +257,41 @@ public class ValorGame extends RPGGame {
 	 * 	3 if tie
 	 */
 	public int roundResult() {
-		//TODO: implement code
-		return 0;
+		//check top row if any heroes
+		ValorSpace[][] m = (ValorSpace[][]) getMap().getMap();
+		boolean heroWin = false;
+		boolean monsterWin = false;
+		for(ValorSpace s : m[0]) {
+			if(s instanceof InaccessibleSpace) {
+				continue;
+			} 
+			if(s.containHero()) {
+				heroWin = true;
+				break;
+			}
+		}
+		
+		
+		
+		//check bottom row if any monsters
+		for(ValorSpace s : m[m.length-1]) {
+			if(s instanceof InaccessibleSpace) {
+				continue;
+			} 
+			if(s.containMonster()) {
+				monsterWin = true;
+				break;
+			}
+		}
+		
+		if(monsterWin && heroWin) {
+			return 3;
+		} else if(monsterWin) {
+			return 2;
+		} else if(heroWin) {
+			return 1;
+		} 
+		return 0; 
 	}
 	
 	public ValorGame() {

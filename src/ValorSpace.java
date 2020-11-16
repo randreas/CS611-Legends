@@ -33,5 +33,14 @@ public abstract class ValorSpace extends Space{
 		}
 		return false;
 	}
+	
+	public boolean containMonster() {
+		for(Character c : chars) {
+			if(c instanceof Monster) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
