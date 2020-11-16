@@ -9,8 +9,12 @@ public abstract class ValorSpace extends Space{
 		chars = new ArrayList<Character>();
 	}
 	
-	public void enterSpace(Character c) {
-		
+	public boolean enterSpace(Character c) {
+		if(c instanceof Hero && containHero()) {
+			return false;
+		}
+		chars.add(c);
+		return true;
 	}
 	
 	public void exitSpace(Character c) {
@@ -20,6 +24,14 @@ public abstract class ValorSpace extends Space{
 	public ArrayList<Character> getChars() {
 		return this.chars;
 	}
-
+	
+	public boolean containHero() {
+		for(Character c : chars) {
+			if(c instanceof Hero) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

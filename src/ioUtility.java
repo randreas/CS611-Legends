@@ -895,5 +895,33 @@ public class ioUtility {
         }
 	}
 	
+	public Location parseInitalLaneLocation(ValorMap map) {
+		boolean isValid = false;
+		int lane = 0;
+		while(!isValid) {
+			System.out.println("Please select the lane. (1-" + map.getNumLanes());
+			lane = parseInt();
+			if(lane < 0 || lane > map.getNumLanes()) {
+				printErrorParse();
+			}
+		}
+		Random r = new Random();
+		isValid = false;
+		int col = 0;
+		while(!isValid) {
+			col = r.nextInt(map.getLaneSize());
+			col = ((lane-1)*map.getLaneSize())+col;
+			
+			ValorSpace s = (ValorSpace) map.getMap()[map.getRows()-1][col];
+			if(!s.containHero()) {
+				isValid = true;
+			}
+		}
+		
+		Location l = new Location(lane,map.getRows()-1, col);
+		return l;
+		
+	}
+	
 	
 }

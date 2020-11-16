@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class ValorMap extends GridMap {
 	
-	private int laneSize = 2;
-	private int numLanes = 3;
+	private int laneSize ;
+	private int numLanes ;
 	
 	public ValorMap() {
 		this(8,8,3,2);	

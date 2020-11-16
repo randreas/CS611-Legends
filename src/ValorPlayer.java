@@ -2,15 +2,100 @@ import java.util.*;
 
 public class ValorPlayer extends Player {
 	//Hashmap to track the hero and where his original lane is.
-	private HashMap<Hero, Integer> heroes;
+	private HashMap<Hero, Location> heroes;
 	public ValorPlayer() {
 		super();
-		heroes = new HashMap<Hero,Integer> ();
+		heroes = new HashMap<Hero,Location> ();
 		
 	}
 	
+	public ValorPlayer(String name, String icon) {
+		// TODO Auto-generated constructor stub
+		super(name,icon);
+		heroes = new HashMap<Hero,Location> ();
+		
+	}
+
 	//Function to add a hero into the map
-	public void addHero(Hero h, int lane) {
-		heroes.put(h, lane);
+	public void addHero(Hero h, Location l) {
+		heroes.put(h, l);
+	}
+	
+	//Function to add a hero into the map
+	public void updateLocation(Hero h, Location l) {
+		heroes.replace(h, l);
+	}
+	
+	public HashMap<Hero,Location> getHeroes() {
+		return this.heroes;
+	}
+	
+	/*
+	 * Function for player to move on the ValorMap
+	 * TODO: Update Location
+	 */
+	public boolean move(Hero h, Location l, String dir, ValorMap map) {
+		int rowLoc = l.getRow();
+		int colLoc = l.getCol();
+		if(dir.equals("W")) {
+			if((rowLoc - 1) >= 0) {
+				if(map.getMap()[rowLoc - 1][colLoc] instanceof BlockedSpace) {
+					System.out.println("That area is inaccessible. Please go another way");
+					return false;
+				} else {
+					map.getMap()[rowLoc][colLoc].resetSpace();
+					rowLoc--;
+				}
+				
+			} else {
+				System.out.println("You cannot go any further. Please choose a valid movement input.");
+				return false;
+			}
+		} else if(dir.equals("S")) {
+			if((rowLoc + 1) < map.getRows()) {
+				if(map.getMap()[rowLoc + 1][colLoc] instanceof BlockedSpace) {
+					System.out.println("That area is inaccessible. Please go another way");
+					return false;
+				} else {
+					map.getMap()[rowLoc][colLoc].resetSpace();
+					rowLoc++;
+				}
+			} else {
+				System.out.println("You cannot go any further. Please choose a valid movement input.");
+				return false;
+			}
+		} else if(dir.equals("A")) {
+			if(colLoc - 1 >= 0) {
+				if(map.getMap()[rowLoc][colLoc -1] instanceof BlockedSpace) {
+					System.out.println("That area is inaccessible. Please go another way");
+					return false;
+				} else {
+					map.getMap()[rowLoc][colLoc].resetSpace();
+					colLoc--;
+				}
+			} else {
+				System.out.println("You cannot go any further. Please choose a valid movement input.");
+				return false;
+			}
+		} else if(dir.equals("D")) {
+			if(colLoc + 1 < map.getCols()) {
+				if(map.getMap()[rowLoc][colLoc+1] instanceof BlockedSpace) {
+					System.out.println("That area is inaccessible. Please go another way");
+					return false;
+				} else {
+					map.getMap()[rowLoc][colLoc].resetSpace();
+					colLoc++;
+				}
+			} else {
+				System.out.println("You cannot go any further. Please choose a valid movement input.");
+				return false;
+			}
+		}
+		
+		
+		
+		return true;
+
+
 	}
 }
