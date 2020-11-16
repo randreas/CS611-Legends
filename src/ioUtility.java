@@ -1,16 +1,16 @@
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map.Entry;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 
@@ -20,9 +20,11 @@ import java.nio.charset.Charset;
 
 public class ioUtility {
 	private static Scanner scanner = new Scanner(System.in);
-	private static AudioStream audioStream = null;
+	private static AudioInputStream audioStream = null;
+	private static Clip clip = null;
+
 	public ioUtility() {
-		
+
 	}
 	
 	/*
@@ -674,9 +676,9 @@ public class ioUtility {
 	/*
 	 * Function to play sound based on the input
 	 */
-	public void playSound(String sound)  {
+	public void playSound(String sound )  {
 		 
-		    // open the sound file as a Java input stream
+		// open the sound file as a Java input stream
 		String soundFile = null;
 		switch (sound) {
 		case "opening":
@@ -704,29 +706,25 @@ public class ioUtility {
 			soundFile = "ConfigFiles\\map.wav";
 			break;
 		}
-			
-		     
-		    InputStream in = null;
-			try {
-				in = new FileInputStream(soundFile);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		
-		   
-			if(audioStream != null ) {
-				AudioPlayer.player.stop(audioStream);
-			}
-			 // create an audiostream from the inputstream
-			try {
-				audioStream = new AudioStream(in);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		    // play the audio clip with the audioplayer class
-			
-		    AudioPlayer.player.start(audioStream);
+
+		if(audioStream != null && clip != null) {
+			clip.stop();
+		}
+
+		try {
+			audioStream = AudioSystem.getAudioInputStream(new File(soundFile).getAbsoluteFile());
+			// create clip reference
+			clip = AudioSystem.getClip();
+
+			// open audioInputStream to the clip
+			clip.open(audioStream);
+
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+			clip.start();
+		} catch (Exception e) {
+			printErrorParse();
+		}
 		   
 	}
 	
@@ -734,8 +732,8 @@ public class ioUtility {
 	 * Function to stop audio 4
 	 */
 	public void stopAudio() {
-		if(audioStream != null ) {
-			AudioPlayer.player.stop(audioStream);
+		if(audioStream != null && clip != null) {
+			clip.stop();
 		}
 	}
 	

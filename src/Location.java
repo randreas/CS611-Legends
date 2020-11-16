@@ -2,7 +2,10 @@
  * Location.java - class that keep tracks where a unit is on the map.
  */
 public class Location {
+	//Original Lane, do not change if TP out
 	private int lane;
+	
+	//Row and Col of the current position based on the map
 	private int row;
 	private int col;
 	

@@ -3,6 +3,7 @@ import java.util.*;
 public class ValorPlayer extends Player {
 	//Hashmap to track the hero and where his original lane is.
 	private HashMap<Hero, Location> heroes;
+	
 	public ValorPlayer() {
 		super();
 		heroes = new HashMap<Hero,Location> ();
