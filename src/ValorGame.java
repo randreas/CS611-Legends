@@ -37,7 +37,7 @@ public class ValorGame extends RPGGame {
 			System.out.println("Custom  (C)");
 			mode = io.parseString().toUpperCase();
 			if(mode.equals("D")) {
-				ValorMap map = new ValorMap();
+				ValorMap map = new ValorMap(itemInven);
 				super.setMap(map);
 				isValid = true;
 			} else if (mode.equals("C")) {
@@ -76,7 +76,7 @@ public class ValorGame extends RPGGame {
 				}
 				
 				int numCols = (laneSize*numLanes) + (numLanes-1);
-				ValorMap map = new ValorMap(numRows,numCols,numLanes,laneSize);
+				ValorMap map = new ValorMap(numRows,numCols,numLanes,laneSize,itemInven);
 				super.setMap(map);
 				
 				isValid = true;
@@ -217,7 +217,13 @@ public class ValorGame extends RPGGame {
 	 * Function that prompts users what actions to take, check if action is valid, perform action
 	 */
 	public void playerTurn() {
-		//TODO: implement code
+		//For every player in the game
+		for(ValorPlayer p : playerList) {
+			//For every hero that the player has
+			for(Hero h : p.getHeroes().keySet()) {
+
+			}
+		}
 
 	}
 	
@@ -230,12 +236,9 @@ public class ValorGame extends RPGGame {
 			if(heroesAvailable.size() == 0) {
 				//if no available heroes to attack, move forward/Down
 				Location loc = monstersOnMap.get(m);
-				int row = loc.getRow();
 				ValorSpace s1 = (ValorSpace)getMap().getMap()[loc.getRow()][loc.getCol()];
 				ValorSpace s2 = (ValorSpace)getMap().getMap()[loc.getRow()+1][loc.getCol()];
-				if(s2.containMonster()) {
-					continue;
-				} else {
+				if(!s2.containMonster()) {
 					s1.exitSpace(m);
 					s2.enterSpace(m);
 				}

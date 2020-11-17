@@ -5,14 +5,16 @@ public class ValorMap extends GridMap {
 	
 	private int laneSize ;
 	private int numLanes ;
+	private Market market;
 	
-	public ValorMap() {
-		this(8,8,3,2);	
+	public ValorMap(Inventory itemInven) {
+		this(8,8,3,2, itemInven);
 	}
 	
 	
-	public ValorMap(int rows, int cols, int numLanes, int laneSize) {
+	public ValorMap(int rows, int cols, int numLanes, int laneSize, Inventory itemInven) {
 		super(rows,cols);
+		market = new Market(itemInven);
 		this.laneSize = laneSize;
 		this.numLanes = numLanes;
 		//Set first and last row as nexus
@@ -42,10 +44,9 @@ public class ValorMap extends GridMap {
 		int numFree = totalNumCells - numNexus - numInaccessible;
 		
 		int numCave =  (int) (numFree * 0.25);
-		int numBush = (int) (numFree * 0.25);;
+		int numBush = (int) (numFree * 0.25);
 		int numKoulou = (int) (numFree * 0.25);
-		int numPlain = numFree - numCave - numBush - numKoulou;
-		
+
 		Random r = new Random();
 		for(int i = 0; i < numCave; i++) {
 			int rIdx = r.nextInt(rows);
@@ -159,8 +160,22 @@ public class ValorMap extends GridMap {
 	
 	/*
 	 * Function that calls actions when a hero steps onto that cell.
+	 * Location l1 - initial location
+	 * Location l2 - final location
 	 */
-	public void mapAction() {
-		//TODO: implement code
+	public void mapAction(Hero h, Location l1, Location l2) {
+		Space initialSpace = getMap()[l1.getRow()][l1.getCol()];
+		if(initialSpace instanceof isBuffableSpace) {
+			((isBuffableSpace) initialSpace).exitSpaceDeBuff(h);
+		}
+
+		Space finalSpace = getMap()[l2.getRow()][l2.getCol()];
+		if(finalSpace instanceof isBuffableSpace) {
+			((isBuffableSpace) finalSpace).enterSpaceBuff(h);
+		}
+
+		if(finalSpace instanceof NexusSpace) {
+			market.shop(h);
+		}
 	}
 }

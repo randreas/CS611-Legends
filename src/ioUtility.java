@@ -258,6 +258,36 @@ public class ioUtility {
 		
 		return s;
 	}
+
+
+	/*
+	 * Function to print out movement menu and user to parse what they would like to do.
+	 */
+	public String choiceValorMenu() {
+		System.out.println("What would you like to do?");
+		System.out.println("Move (W/A/S/D)");
+		System.out.println("Check Hero Info (I)");
+		System.out.println("Check Inventory (E)");
+		System.out.println("Check Map (M)");
+		System.out.println("Attack (A)");
+		System.out.println("End Turn (T)");
+		System.out.println("Quit (Q)");
+
+		String s = parseString().toUpperCase();
+		boolean isValidString  = false;
+		while(!isValidString) {
+			if(s.equals("W") || s.equals("A") || s.equals("S")  || s.equals("D")  || s.equals("I")
+					|| s.equals("E")  || s.equals("M") ||  s.equals("T") ||  s.equals("Q")) {
+				isValidString = true;
+			} else {
+				printErrorParse();
+				s = parseString().toUpperCase();
+
+			}
+		}
+
+		return s;
+	}
 	
 	/*
 	 * Function to print out shop menu and user to parse what they would like to do.

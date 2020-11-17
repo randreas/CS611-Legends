@@ -34,7 +34,11 @@ public class Market {
 		
 		
 	}
-	
+
+
+	public void shop( Hero h ) {
+		buySell(null,h,io);
+	}
 	/*
 	 * Function to choose whether a hero buys or sells in the market
 	 */
