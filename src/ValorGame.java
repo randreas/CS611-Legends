@@ -8,7 +8,7 @@ public class ValorGame extends RPGGame {
 	private List<Hero> paladinList;
 	private List<Hero> sorcererList;
 	private List<Monster> monsters;
-	private Inventory itemInven; 
+	private Inventory itemInven;
 	private ioUtility io;
 	private List<ValorPlayer> playerList;
 	private int numHeroesTeam = 3;
@@ -21,9 +21,9 @@ public class ValorGame extends RPGGame {
 	 */
 	public void startGame() {
 		initializeMap();
-		io.printFullValorMap((ValorMap) getMap());
 		//TODO: implement code
-		initializePlayer(0);
+		playerList.add(initializePlayer(0));
+		chooseHeros(playerList.get(0));
 		gameRound();
 		
 		
@@ -107,7 +107,6 @@ public class ValorGame extends RPGGame {
 			}
 			if(iconList.contains(icon)) {
 				System.out.println(ConsoleColors.RED + "Icon is already selected by another player. Please enter a unique icon" + ConsoleColors.RESET);
-				continue;
 			} else {
 				validIcon = true;
 				iconList.add(icon);
@@ -123,13 +122,13 @@ public class ValorGame extends RPGGame {
 	 * Function to chooseHeros to add into player
 	 */
 	public void chooseHeros(ValorPlayer player) {
-		System.out.println(player.getName() +", it is time to build your team, you're just a human so I don\'t think you can defeat these monsters");
+		System.out.println(player.getName() +", it is time to build your team, you're just a human so I don't think you can defeat these monsters");
 		
 		System.out.println();
 		while(player.getHeroes().size() < numHeroesTeam) {
 			HeroClass chosenHeroClass = io.parseHeroClass();
 			Hero chosenHero = null;
-			int index = -1;
+			int index;
 			switch(chosenHeroClass) {
 			case PALADIN:
 				index = io.parseHeroId(paladinList,chosenHeroClass);
@@ -164,13 +163,15 @@ public class ValorGame extends RPGGame {
 		if(numRound == 1 || numRound % 8 == 0) {
 			spawnMonster();
 		}
+		io.printFullValorMap((ValorMap) getMap());
 		playerTurn();
 		monsterTurn();
 		
 		numRound++;
 		int results = roundResult();
 		if(results == 0) {
-			gameRound();
+		//	gameRound();
+			System.out.println("No winner");
 		} else if(results == 1) {
 			System.out.println("Player Wins");
 		} else if(results == 2) {
@@ -201,9 +202,9 @@ public class ValorGame extends RPGGame {
 		
 		for(int i = 0; i < ((ValorMap)getMap()).getNumLanes(); i++) {
 			Random r = new Random();
-			Monster m = (Monster) filteredList.get(r.nextInt(filteredList.size())).clone();
+			Monster m = filteredList.get(r.nextInt(filteredList.size())).clone();
 			monstersOnMap.add(m);
-			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i);
+			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i+1);
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
 			s.enterSpace(m);
 		}
@@ -216,6 +217,7 @@ public class ValorGame extends RPGGame {
 	public void playerTurn() {
 		//TODO: implement code
 	}
+	
 	/*
 	 * Function to automatically call monsters turn
 	 */
@@ -237,7 +239,8 @@ public class ValorGame extends RPGGame {
 	 */
 	public ArrayList<Hero> checkMonsterVicinity(Monster m) {
 		//TODO: implement code
-		return null;
+		ArrayList<Hero> heros = new ArrayList<>();
+		return heros;
 	}
 	
 	/*
@@ -258,14 +261,15 @@ public class ValorGame extends RPGGame {
 	 */
 	public int roundResult() {
 		//check top row if any heroes
-		ValorSpace[][] m = (ValorSpace[][]) getMap().getMap();
+		ValorMap map = (ValorMap) getMap();
+		Space[][] m =  map.getMap();
 		boolean heroWin = false;
 		boolean monsterWin = false;
-		for(ValorSpace s : m[0]) {
+		for(Space s :  m[0]) {
 			if(s instanceof InaccessibleSpace) {
 				continue;
 			} 
-			if(s.containHero()) {
+			if(((ValorSpace)s).containHero()) {
 				heroWin = true;
 				break;
 			}
@@ -274,11 +278,11 @@ public class ValorGame extends RPGGame {
 		
 		
 		//check bottom row if any monsters
-		for(ValorSpace s : m[m.length-1]) {
+		for(Space s : m[m.length-1]) {
 			if(s instanceof InaccessibleSpace) {
 				continue;
 			} 
-			if(s.containMonster()) {
+			if(((ValorSpace)s).containMonster()) {
 				monsterWin = true;
 				break;
 			}
@@ -300,7 +304,7 @@ public class ValorGame extends RPGGame {
 		io = new ioUtility();
 		io.printWelcomeMessage();
 		//io.playSound("opening");
-		iconList = new ArrayList<String>();
+		iconList = new ArrayList<>();
 		//adding default icons 
 		iconList.add("M");
 		iconList.add("#");
@@ -314,8 +318,8 @@ public class ValorGame extends RPGGame {
 		paladinList = p.parsePaladins();
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
-		
-		
+		playerList = new ArrayList<>();
+		monstersOnMap = new ArrayList<>();
 		
 
 		

@@ -924,7 +924,7 @@ public class ioUtility {
 	public int getRandomCellinRow(ValorMap map, int lane) {
 		Random r = new Random();
 		int col = r.nextInt(map.getLaneSize());
-		col = ((lane-1)*map.getLaneSize())+col;
+		col = ((lane-1)*(map.getLaneSize()+1))+col;
 		return col;
 	}
 	
