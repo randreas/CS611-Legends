@@ -2,32 +2,29 @@ import java.util.*;
 
 public class ValorPlayer extends Player {
 	//Hashmap to track the hero and where his original lane is.
-	private LinkedHashMap<Hero, Location> heroes;
+	private ArrayList<Hero> heroes;
 	
 	public ValorPlayer() {
 		super();
-		heroes = new LinkedHashMap<Hero,Location> ();
+		heroes = new ArrayList<> ();
 		
 	}
 	
 	public ValorPlayer(String name, String icon) {
 		// TODO Auto-generated constructor stub
 		super(name,icon);
-		heroes = new LinkedHashMap<Hero,Location> ();
+		heroes = new ArrayList<> ();
 		
 	}
 
 	//Function to add a hero into the map
-	public void addHero(Hero h, Location l) {
-		heroes.put(h, l);
+	public void addHero(Hero h) {
+		heroes.add(h);
 	}
+
+
 	
-	//Function to add a hero into the map
-	public void updateLocation(Hero h, Location l) {
-		heroes.replace(h, l);
-	}
-	
-	public HashMap<Hero,Location> getHeroes() {
+	public  ArrayList<Hero>  getHeroes() {
 		return this.heroes;
 	}
 
@@ -35,8 +32,8 @@ public class ValorPlayer extends Player {
 	 * Function for player to back to original lane and to nexus
 	 */
 	public void back(Hero h, ValorMap map) {
-		Location currLoc = heroes.get(h);
-		int ogLane = heroes.get(h).getLane();
+		Location currLoc = h.getLocation();
+		int ogLane = h.getLocation().getLane();
 		ioUtility io = new ioUtility();
 		Location nexusLoc = io.getNexusLocation(map,ogLane);
 		((ValorSpace)map.getMap()[currLoc.getRow()][currLoc.getCol()]).exitSpace(h);

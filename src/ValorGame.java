@@ -13,7 +13,7 @@ public class ValorGame extends RPGGame {
 	private int numHeroesTeam = 3;
 	private List<String> iconList;
 	private int numRound = 1;
-	private LinkedHashMap<Monster,Location> monstersOnMap;
+	private ArrayList<Monster> monstersOnMap;
 	
 	/*
 	 * Function to start the game
@@ -151,7 +151,7 @@ public class ValorGame extends RPGGame {
 			Location loc = io.parseInitalLaneLocation((ValorMap) getMap());
 			ValorSpace s = (ValorSpace) getMap().getMap()[loc.getRow()][loc.getCol()];
 			s.enterSpace(chosenHero);
-			player.addHero(chosenHero,loc);
+			player.addHero(chosenHero);
 		
 			
 		}
@@ -187,7 +187,7 @@ public class ValorGame extends RPGGame {
 	 */
 	public void spawnMonster() {
 		int maxLevel = 0;
-		for(Hero h :playerList.get(0).getHeroes().keySet()) {
+		for(Hero h : playerList.get(0).getHeroes()) {
 			if(h.getLevel() > maxLevel) {
 				maxLevel = h.getLevel();
 			}
@@ -207,7 +207,7 @@ public class ValorGame extends RPGGame {
 			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i+1);
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
 			Location loc = new Location(i+1,0,colSpawn);
-			monstersOnMap.put(m,loc);
+			monstersOnMap.add(m);
 			s.enterSpace(m);
 		}
 	}
@@ -220,7 +220,7 @@ public class ValorGame extends RPGGame {
 		//For every player in the game
 		for(ValorPlayer p : playerList) {
 			//For every hero that the player has
-			for(Hero h : p.getHeroes().keySet()) {
+			for(Hero h : p.getHeroes()) {
 
 			}
 		}
@@ -231,11 +231,11 @@ public class ValorGame extends RPGGame {
 	 * Function to automatically call monsters turn
 	 */
 	public void monsterTurn() {
-		for(Monster m : monstersOnMap.keySet()) {
+		for(Monster m : monstersOnMap) {
 			ArrayList<Hero> heroesAvailable = checkMonsterVicinity(m);
 			if(heroesAvailable.size() == 0) {
 				//if no available heroes to attack, move forward/Down
-				Location loc = monstersOnMap.get(m);
+				Location loc = m.getLocation();
 				ValorSpace s1 = (ValorSpace)getMap().getMap()[loc.getRow()][loc.getCol()];
 				ValorSpace s2 = (ValorSpace)getMap().getMap()[loc.getRow()+1][loc.getCol()];
 				if(!s2.containMonster()) {
@@ -289,7 +289,7 @@ public class ValorGame extends RPGGame {
 	public ArrayList<Hero> checkMonsterVicinity(Monster m) {
 		//TODO: implement code
 		ArrayList<Hero> heros = new ArrayList<>();
-		Location l = monstersOnMap.get(m);
+		Location l = m.getLocation();
 		//Check current space
 		if (((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()]).containHero()) {
 			for (Character c :((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()]).getChars()) {
@@ -438,7 +438,7 @@ public class ValorGame extends RPGGame {
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
 		playerList = new ArrayList<>();
-		monstersOnMap = new LinkedHashMap<>();
+		monstersOnMap = new ArrayList<>();
 		
 
 		
