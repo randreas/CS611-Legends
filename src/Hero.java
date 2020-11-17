@@ -22,7 +22,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 	 * Hero Constructor
 	 */
 	public Hero(String name, int level, Stats mana, Stats strength, Stats agility, Stats dexterity, BigDecimal wallet, int exp) {
-		super(name, level, strength, new Stats(StatType.DEFENSE, 0), agility);
+		super(name, level, strength, new Stats(StatType.DEFENSE, 0), agility, null);
 		this.mana = mana;
 		this.dexterity = dexterity;
 		this.wallet = wallet;

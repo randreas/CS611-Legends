@@ -6,7 +6,7 @@ import java.util.Random;
 public abstract class Monster extends Character implements Attacker{
 	
 	public Monster(String name, int level, Stats strength, Stats defense, Stats agility) {
-		super(name, level, strength, defense, agility);
+		super(name, level, strength, defense, agility, null);
 	}
 
 	

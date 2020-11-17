@@ -8,15 +8,17 @@ public abstract class Character {
 	private Stats strength;
 	private Stats defense;
 	private Stats agility;
+	private Location location;
 	
 	
-	public Character(String name, int level, Stats strength, Stats defense, Stats agility) {
+	public Character(String name, int level, Stats strength, Stats defense, Stats agility, Location location) {
 		this.name = name;
 		this.level = level;
 		this.strength = strength;
 		this.defense = defense;
 		this.agility = agility;
 		this.hp = new Stats(StatType.HEALTH, 0);
+		this.location = location;
 		setHpLevel(level);
 	}
 	public Character(Character c) {
@@ -72,6 +74,11 @@ public abstract class Character {
 	public void setAgility(int amount) {
 		this.agility.setAmount(amount);
 	}
+	public Location getLocation() { return this.location;};
+	public void setLocation(Location l) { this.location = l; };
+	public void setRow(int row) { this.location.setRow(row);}
+	public void setCol(int col) { this.location.setCol(col);}
+	public void setLane(int lane) { this.location.setLane(lane);}
 	
 	
 }
