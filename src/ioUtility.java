@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 import java.util.Map.Entry;
@@ -6,20 +7,18 @@ import java.util.Map.Entry;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
 
 /*
  * ioUtility.java - a java file that handles a majority of all the inputs and outputs for legends
  */
 
 public class ioUtility {
-	private static Scanner scanner = new Scanner(System.in);
+	private static final Scanner scanner = new Scanner(System.in);
 	private static AudioInputStream audioStream = null;
 	private static Clip clip = null;
 
@@ -31,8 +30,8 @@ public class ioUtility {
 	 * Function to parseString
 	 */
 	public String parseString() {
-		String string = scanner.next();
-		return string;
+
+		return scanner.next();
 	}
 	
 	/*
@@ -41,7 +40,7 @@ public class ioUtility {
 	public void printWelcomeMessage() {
 		printASCIIArt("WELCOME");
 		String string = "¯\\\\_(ツ)_/¯";
-		Charset.forName("UTF-8").encode(string);
+		StandardCharsets.UTF_8.encode(string);
 		System.out.println("\t<------------------------- Welcome to the World of Legends and Monsters ---------------------->");
 		System.out.println("\t<                                                                                             >");
 		System.out.println("\t<    You mysteriously teleported into the mysterious world where gods and monster lived,      >");
@@ -176,18 +175,18 @@ public class ioUtility {
 		System.out.println("===================================================================================================================");
 		int id = 1;
 		for(Hero h : list) {
-		
+
 			System.out.printf(id++ + "\t" + h.getName());
 			for(int i = 0; i < 24-h.getName().length(); i++) {
 				System.out.printf(" ");
 			}
-			System.out.printf(h.getLevel() + "\t" + h.getHp() + "\t" + h.getMana() + "\t"+ h.getStrength() + "\t\t" 
+			System.out.println(h.getLevel() + "\t" + h.getHp() + "\t" + h.getMana() + "\t"+ h.getStrength() + "\t\t"
 					+ h.getDefense() + "\t\t"
 					+ h.getAgility()
 					+ "\t\t" + h.getDexterity() + "\t" + h.getWallet().toString() + "\t"+ h.getExp());
 		
 			
-			System.out.println();
+			
 		}
 		System.out.println();
 		
