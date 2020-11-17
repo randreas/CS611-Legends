@@ -30,7 +30,18 @@ public class ValorPlayer extends Player {
 	public HashMap<Hero,Location> getHeroes() {
 		return this.heroes;
 	}
-	
+
+	/*
+	 * Function for player to back to original lane and to nexus
+	 */
+	public void back(Hero h, ValorMap map) {
+		Location currLoc = heroes.get(h);
+		int ogLane = heroes.get(h).getLane();
+		ioUtility io = new ioUtility();
+		Location nexusLoc = io.getNexusLocation(map,ogLane);
+		((ValorSpace)map.getMap()[currLoc.getRow()][currLoc.getCol()]).exitSpace(h);
+		((ValorSpace)map.getMap()[nexusLoc.getRow()][nexusLoc.getCol()]).enterSpace(h);
+	}
 	/*
 	 * Function for player to move on the ValorMap
 	 * TODO: Update Location

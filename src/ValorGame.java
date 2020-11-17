@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.*;
 
 public class ValorGame extends RPGGame {
@@ -228,7 +229,6 @@ public class ValorGame extends RPGGame {
 			ArrayList<Hero> heroesAvailable = checkMonsterVicinity(m);
 			if(heroesAvailable.size() == 0) {
 				//if no available heroes to attack, move forward/Down
-				//TODO: implement code
 				Location loc = monstersOnMap.get(m);
 				int row = loc.getRow();
 				ValorSpace s1 = (ValorSpace)getMap().getMap()[loc.getRow()][loc.getCol()];
@@ -242,7 +242,6 @@ public class ValorGame extends RPGGame {
 
 			} else {
 				//Randomly attack a hero in the list
-				//TODO: implement code
 				Random r = new Random();
 				int heroIdx = r.nextInt(heroesAvailable.size());
 				boolean hit = m.attack(heroesAvailable.get(heroIdx));
@@ -251,7 +250,7 @@ public class ValorGame extends RPGGame {
 				} else {
 					io.printDodgeScene(heroesAvailable.get(heroIdx));
 				}
-				characterDie(heroesAvailable.get(heroIdx));
+				characterDie(playerList.get(0),m,heroesAvailable.get(heroIdx));
 			}
 		}
 
@@ -260,15 +259,21 @@ public class ValorGame extends RPGGame {
 
 	/*
 	 * Function that calls actions is a character has died.
+	 * c1 is attacker
+	 * c2 is attacked character
 	 */
-	public void characterDie(Character c) {
-		if(c.getHp() <= 0) {
-			if(c instanceof Hero) {
-				//If hero dies, spawn back at nexus full health
-				//TODO: implement code
-
-			} else if (c instanceof Monster) {
-				monstersOnMap.remove(c);
+	public void characterDie(ValorPlayer p, Character c1, Character c2) {
+		if(c2.getHp() <= 0) {
+			if(c2 instanceof Hero) {
+				//If hero dies, spawn back at nexus half health, gets to buy item?
+				p.back((Hero)c2,(ValorMap)getMap());
+				((Hero)c2).resurrect();
+			} else if (c2 instanceof Monster) {
+				//Hero c1 has killed a monster
+				monstersOnMap.remove(c2);
+				((Hero)c1).gainExp();
+				BigDecimal moneyGain = new BigDecimal("100").multiply(new BigDecimal(c1.getLevel()));
+				((Hero)c1).setWallet(((Hero)c1).getWallet().add(moneyGain));
 			}
 		}
 

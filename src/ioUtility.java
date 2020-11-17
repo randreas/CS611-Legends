@@ -904,22 +904,27 @@ public class ioUtility {
 				isValid = true;
 			}
 		}
-		isValid = false;
+		Location l = getNexusLocation(map,lane);
+		return l;
+		
+	}
+
+	public Location getNexusLocation(ValorMap map, int lane) {
+		boolean isValid = false;
 		int col = 0;
 		while(!isValid) {
 			col = getRandomCellinRow(map,lane);
-			
+
 			ValorSpace s = (ValorSpace) map.getMap()[map.getRows()-1][col];
 			if(!s.containHero()) {
 				isValid = true;
 			}
 		}
-		
+
+
 		Location l = new Location(lane,map.getRows()-1, col);
 		return l;
-		
 	}
-	
 	
 	public int getRandomCellinRow(ValorMap map, int lane) {
 		Random r = new Random();

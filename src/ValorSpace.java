@@ -6,7 +6,7 @@ public abstract class ValorSpace extends Space{
 	
 	public ValorSpace(String icon, int row, int col) {
 		super(icon, row, col);
-		chars = new ArrayList<Character>();
+		chars = new ArrayList<>();
 	}
 	
 	public boolean enterSpace(Character c) {
