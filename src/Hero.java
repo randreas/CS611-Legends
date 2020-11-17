@@ -341,26 +341,24 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 					io.printWeaponList(getInventory().getWeaponList());
 					int idx = io.parseChoice(getInventory().getWeaponList(), 1);
 					getInventory().getWeaponList().get(idx).equip(this);
-					isValid = true;
 				} else {
 					io.printArmorList(getInventory().getArmorList());
 					int idx = io.parseChoice(getInventory().getArmorList(),1);
 					getInventory().getArmorList().get(idx).equip(this);
-					isValid = true;
 				}
+				isValid = true;
 				break;
 			case 1:
 				if(res.equals("W")) {
 					io.printWeaponList(getInventory().getWeaponList());
 					int idx = io.parseChoice(getInventory().getWeaponList(),1) -1;
 					getInventory().getWeaponList().get(idx).unequip(this);
-					isValid = true;
 				} else {
 					io.printArmorList(getInventory().getArmorList());
 					int idx = io.parseChoice(getInventory().getArmorList(),1) -1;
 					getInventory().getArmorList().get(idx).unequip(this);
-					isValid = true;
 				}
+				isValid = true;
 				break;
 			case 2:
 				useItem();
@@ -386,10 +384,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		}
 		Random r = new Random();
 		int x = r.nextInt(100);
-		if(x <= dodgeChance) {
-			return true;
-		}
-		return false;
+		return x <= dodgeChance;
 	}
 	
 	/*
@@ -400,8 +395,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 			System.out.println("No spells available. Please pick another spell");
 			return null;
 		}
-		Spell s = inventory.getSpellList().get(io.parseSpellChoice(inventory.getSpellList()));
-		return s;
+		return inventory.getSpellList().get(io.parseSpellChoice(inventory.getSpellList()));
 	}
 	
 
@@ -409,5 +403,5 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		return maxLevel;
 	}
 	
-	
+
 }

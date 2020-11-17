@@ -240,6 +240,7 @@ public class ValorGame extends RPGGame {
 				ValorSpace s2 = (ValorSpace)getMap().getMap()[loc.getRow()+1][loc.getCol()];
 				if(!s2.containMonster()) {
 					s1.exitSpace(m);
+					m.setRow(loc.getRow()+1);
 					s2.enterSpace(m);
 				}
 

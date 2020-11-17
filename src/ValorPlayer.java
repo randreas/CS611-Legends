@@ -38,6 +38,8 @@ public class ValorPlayer extends Player {
 		Location nexusLoc = io.getNexusLocation(map,ogLane);
 		((ValorSpace)map.getMap()[currLoc.getRow()][currLoc.getCol()]).exitSpace(h);
 		((ValorSpace)map.getMap()[nexusLoc.getRow()][nexusLoc.getCol()]).enterSpace(h);
+		h.setLocation(nexusLoc);
+		map.mapAction(h,currLoc, nexusLoc);
 	}
 	/*
 	 * Function for player to move on the ValorMap

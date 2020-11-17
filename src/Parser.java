@@ -28,8 +28,10 @@ public class Parser {
 	 * Function to parse file into a list of armors
 	 */
 	public List<Armor> parseArmor() {
-		List<String> l = readFileInList("ConfigFiles/Armory.txt");
-		  
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+
+		List<String> l = readFileInList(file + "Armory.txt");
+
 	    Iterator<String> itr = l.iterator(); 
 	    
 	    List<Armor> armorList = new ArrayList<>();
@@ -51,8 +53,10 @@ public class Parser {
 	 * Function to parse file into a list of Weapons
 	 */
 	public List<Weapon> parseWeapon() {
-		List<String> l = readFileInList("ConfigFiles/Weaponry.txt");
-		  
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+
+		List<String> l = readFileInList(file + "Weaponry.txt");
+
 	    Iterator<String> itr = l.iterator(); 
 	    
 	    List<Weapon> weaponList = new ArrayList<>();
@@ -75,8 +79,11 @@ public class Parser {
 	 * Function to parse file into a list of Spells
 	 */
 	public List<Spell> parseSpell() {
-		List<String> l = readFileInList("ConfigFiles/FireSpells.txt");
-		  
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+
+		List<String> l = readFileInList(file + "FireSpells.txt");
+
+
 	    Iterator<String> itr = l.iterator(); 
 	    
 	    List<Spell> spellList = new ArrayList<>();
@@ -91,9 +98,10 @@ public class Parser {
 					Integer.parseInt(s[4]));
 	    	spellList.add(spell);
 	    }
-	    
-	    l = readFileInList("ConfigFiles/IceSpells.txt");
-	    itr = l.iterator(); 
+
+		l = readFileInList(file + "IceSpells.txt");
+
+	    itr = l.iterator();
 	    itr.next();
 	    while (itr.hasNext()) {	
 	    	String data = itr.next();
@@ -105,9 +113,9 @@ public class Parser {
 					Integer.parseInt(s[4]));
 	    	spellList.add(spell);
 	    }
-	    
-	    l = readFileInList("ConfigFiles/LightningSpells.txt");
-	    itr = l.iterator(); 
+
+		l = readFileInList(file + "LightningSpells.txt");
+	    itr = l.iterator();
 	    itr.next();
 	    while (itr.hasNext()) {	
 	    	String data = itr.next();
@@ -127,8 +135,10 @@ public class Parser {
 	 * Function to parse file into a list of Potions
 	 */
 	public Map<Potion,Integer> parsePotion() {
-		List<String> l = readFileInList("ConfigFiles/Potions.txt");
-		  
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+
+		List<String> l = readFileInList(file + "Potions.txt");
+
 	    Iterator<String> itr = l.iterator(); 
 	    
 	    Map<Potion,Integer> potionMap = new HashMap<>();
@@ -152,7 +162,10 @@ public class Parser {
 	 * Function to parse file into a list of Dragons
 	 */
 	public List<Monster> parseMonsters() {
-		List<String> l = readFileInList("ConfigFiles/Dragons.txt");
+
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+
+		List<String> l = readFileInList(file + "Dragons.txt");
 		 
 	    List<Monster> monsterList = new ArrayList<>();
 	    Iterator<String> itr = l.iterator(); 
@@ -169,7 +182,7 @@ public class Parser {
 	    }
 	    
 	    
-		l = readFileInList("ConfigFiles/Exoskeletons.txt");
+		l = readFileInList(file + "Exoskeletons.txt");
 		itr = l.iterator(); 
 	    itr.next();
 	    while (itr.hasNext()) {	
@@ -183,7 +196,7 @@ public class Parser {
 	    	monsterList.add(monster);
 	    }
 	    
-	    l = readFileInList("ConfigFiles/Spirits.txt");
+	    l = readFileInList(file + "Spirits.txt");
 		itr = l.iterator(); 
 	    itr.next();
 	    while (itr.hasNext()) {	
@@ -203,12 +216,14 @@ public class Parser {
 	 * Function to parse file into a list of Paladins
 	 */
 	public List<Hero> parsePaladins() {
-		List<String> l = readFileInList("ConfigFiles/Paladins.txt");
-		  
-	    Iterator<String> itr = l.iterator(); 
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Paladins.txt";
+
+		List<String> l = readFileInList(file);
 	    
 	    List<Hero> heroList = new ArrayList<>();
-	    itr.next();
+		Iterator<String> itr = l.iterator();
+
+		itr.next();
 	    while (itr.hasNext()) {	
 	    	String data = itr.next();
 	    	String[] s = data.split("\\s+");
@@ -229,7 +244,9 @@ public class Parser {
 	 * Function to parse file into a list of Sorcerers
 	 */
 	public List<Hero> parseSorcerers() {
-		List<String> l = readFileInList("ConfigFiles\\Sorcerers.txt"); 
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Sorcerers.txt";
+
+		List<String> l = readFileInList(file);
 		  
 	    Iterator<String> itr = l.iterator(); 
 	    
@@ -255,7 +272,9 @@ public class Parser {
 	 * Function to parse file into a list of Warriors
 	 */
 	public List<Hero> parseWarriors() {
-		List<String> l = readFileInList("ConfigFiles\\Warriors.txt"); 
+		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Warriors.txt";
+
+		List<String> l = readFileInList(file);
 		  
 	    Iterator<String> itr = l.iterator(); 
 	    
