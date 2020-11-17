@@ -149,6 +149,7 @@ public class ValorGame extends RPGGame {
 			}
 			
 			Location loc = io.parseInitalLaneLocation((ValorMap) getMap());
+			chosenHero.setLocation(loc);
 			ValorSpace s = (ValorSpace) getMap().getMap()[loc.getRow()][loc.getCol()];
 			s.enterSpace(chosenHero);
 			player.addHero(chosenHero);
@@ -207,6 +208,7 @@ public class ValorGame extends RPGGame {
 			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i+1);
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
 			Location loc = new Location(i+1,0,colSpawn);
+			m.setLocation(loc);
 			monstersOnMap.add(m);
 			s.enterSpace(m);
 		}

@@ -7,17 +7,17 @@ public class Inventory {
 	private List<Weapon> weaponList;
 	private List<Armor> armorList;
 	private List<Spell> spellList;
-	private Map<Potion,Integer> potionMap;
+	private LinkedHashMap<Potion,Integer> potionMap;
 	
 	
 	public Inventory() {
 		weaponList = new ArrayList<Weapon>();
 		armorList = new ArrayList<Armor>();
 		spellList = new ArrayList<Spell>();
-		potionMap = new HashMap<Potion, Integer>();
+		potionMap = new LinkedHashMap<Potion, Integer>();
 	}
 	public Inventory(List<Weapon> parseWeapon, List<Armor> parseArmor, List<Spell> parseSpell,
-			Map<Potion,Integer> parsePotion) {
+					 LinkedHashMap<Potion,Integer> parsePotion) {
 		// TODO Auto-generated constructor stub
 		this.weaponList = parseWeapon;
 		this.armorList = parseArmor;
@@ -45,7 +45,7 @@ public class Inventory {
 	public Map<Potion,Integer> getPotionMap() {
 		return potionMap;
 	}
-	public void setPotionMap(Map<Potion,Integer> potionMap) {
+	public void setPotionMap(LinkedHashMap<Potion,Integer> potionMap) {
 		this.potionMap = potionMap;
 	}
 	
@@ -89,5 +89,24 @@ public class Inventory {
 		}
 		return false;
 	}
-	
+
+
+	public boolean containsSingleItem(Item i) {
+		for(Weapon w :  weaponList) {
+			if(w.getName().equals(i.getName())) {
+				return true;
+			}
+		}
+		for(Armor a :  armorList) {
+			if(a.getName().equals(i.getName())) {
+				return true;
+			}
+		}
+		for(Spell s :  spellList) {
+			if(s.getName().equals(i.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

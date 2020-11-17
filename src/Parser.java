@@ -134,14 +134,14 @@ public class Parser {
 	/*
 	 * Function to parse file into a list of Potions
 	 */
-	public Map<Potion,Integer> parsePotion() {
+	public LinkedHashMap<Potion,Integer> parsePotion() {
 		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
 
 		List<String> l = readFileInList(file + "Potions.txt");
 
-	    Iterator<String> itr = l.iterator(); 
-	    
-	    Map<Potion,Integer> potionMap = new HashMap<>();
+	    Iterator<String> itr = l.iterator();
+
+		LinkedHashMap<Potion,Integer> potionMap = new LinkedHashMap<>();
 	    itr.next();
 	    while (itr.hasNext()) {	
 	    	String data = itr.next();
