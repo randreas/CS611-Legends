@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ValorGame extends RPGGame {
 	
@@ -14,7 +12,7 @@ public class ValorGame extends RPGGame {
 	private int numHeroesTeam = 3;
 	private List<String> iconList;
 	private int numRound = 1;
-	private List<Monster> monstersOnMap;
+	private LinkedHashMap<Monster,Location> monstersOnMap;
 	
 	/*
 	 * Function to start the game
@@ -165,8 +163,9 @@ public class ValorGame extends RPGGame {
 		}
 		io.printFullValorMap((ValorMap) getMap());
 		playerTurn();
+		System.out.println("===============================================");
 		monsterTurn();
-		
+		io.printFullValorMap((ValorMap) getMap());
 		numRound++;
 		int results = roundResult();
 		if(results == 0) {
@@ -203,9 +202,11 @@ public class ValorGame extends RPGGame {
 		for(int i = 0; i < ((ValorMap)getMap()).getNumLanes(); i++) {
 			Random r = new Random();
 			Monster m = filteredList.get(r.nextInt(filteredList.size())).clone();
-			monstersOnMap.add(m);
+
 			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i+1);
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
+			Location loc = new Location(i+1,0,colSpawn);
+			monstersOnMap.put(m,loc);
 			s.enterSpace(m);
 		}
 	}
@@ -216,30 +217,140 @@ public class ValorGame extends RPGGame {
 	 */
 	public void playerTurn() {
 		//TODO: implement code
+
 	}
 	
 	/*
 	 * Function to automatically call monsters turn
 	 */
 	public void monsterTurn() {
-		for(Monster m : monstersOnMap) {
+		for(Monster m : monstersOnMap.keySet()) {
 			ArrayList<Hero> heroesAvailable = checkMonsterVicinity(m);
 			if(heroesAvailable.size() == 0) {
-				//if no available heroes to attack, move forward
+				//if no available heroes to attack, move forward/Down
 				//TODO: implement code
+				Location loc = monstersOnMap.get(m);
+				int row = loc.getRow();
+				ValorSpace s1 = (ValorSpace)getMap().getMap()[loc.getRow()][loc.getCol()];
+				ValorSpace s2 = (ValorSpace)getMap().getMap()[loc.getRow()+1][loc.getCol()];
+				if(s2.containMonster()) {
+					continue;
+				} else {
+					s1.exitSpace(m);
+					s2.enterSpace(m);
+				}
+
 			} else {
 				//Randomly attack a hero in the list
 				//TODO: implement code
+				Random r = new Random();
+				int heroIdx = r.nextInt(heroesAvailable.size());
+				boolean hit = m.attack(heroesAvailable.get(heroIdx));
+				if(hit) {
+					io.printAttackScene(m, heroesAvailable.get(heroIdx), m.calculateDmg(heroesAvailable.get(heroIdx)));
+				} else {
+					io.printDodgeScene(heroesAvailable.get(heroIdx));
+				}
+				characterDie(heroesAvailable.get(heroIdx));
 			}
 		}
+
+
 	}
-	
+
+	/*
+	 * Function that calls actions is a character has died.
+	 */
+	public void characterDie(Character c) {
+		if(c.getHp() <= 0) {
+			if(c instanceof Hero) {
+				//If hero dies, spawn back at nexus full health
+				//TODO: implement code
+
+			} else if (c instanceof Monster) {
+				monstersOnMap.remove(c);
+			}
+		}
+
+	}
+
+
 	/*
 	 * Function to check which heroes chosen monster can attack
 	 */
 	public ArrayList<Hero> checkMonsterVicinity(Monster m) {
 		//TODO: implement code
 		ArrayList<Hero> heros = new ArrayList<>();
+		Location l = monstersOnMap.get(m);
+		//Check current space
+		if (((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()]).containHero()) {
+			for (Character c :((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()]).getChars()) {
+				if(c instanceof Hero) {
+					heros.add((Hero) c);
+				}
+			}
+		}
+
+		//check for front
+		if(l.getRow() < getMap().getRows()-1) {
+			if (((ValorSpace)getMap().getMap()[l.getRow()+1][l.getCol()]).containHero()) {
+				for (Character c :((ValorSpace)getMap().getMap()[l.getRow()+1][l.getCol()]).getChars()) {
+					if(c instanceof Hero) {
+						heros.add((Hero) c);
+					}
+				}
+			}
+
+			//check diagonal front left
+			if(l.getCol() > 0) {
+				if (((ValorSpace)getMap().getMap()[l.getRow()+1][l.getCol()-1]).containHero()) {
+					for (Character c :((ValorSpace)getMap().getMap()[l.getRow()+1][l.getCol()-1]).getChars()) {
+						if(c instanceof Hero) {
+							heros.add((Hero) c);
+						}
+					}
+				}
+
+			}
+
+			//check diagonal front right
+			if(l.getCol() < getMap().getCols()-1) {
+				if (((ValorSpace)getMap().getMap()[l.getRow()+1][l.getCol()+1]).containHero()) {
+					for (Character c :((ValorSpace)getMap().getMap()[l.getRow()+1][l.getCol()+1]).getChars()) {
+						if(c instanceof Hero) {
+							heros.add((Hero) c);
+						}
+					}
+				}
+
+			}
+
+		}
+
+		//check left
+		if(l.getCol() > 0) {
+			if (((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()-1]).containHero()) {
+				for (Character c :((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()-1]).getChars()) {
+					if(c instanceof Hero) {
+						heros.add((Hero) c);
+					}
+				}
+			}
+
+		}
+
+		//check right
+		if(l.getCol() < getMap().getCols()-1) {
+			if (((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()+1]).containHero()) {
+				for (Character c :((ValorSpace)getMap().getMap()[l.getRow()][l.getCol()+1]).getChars()) {
+					if(c instanceof Hero) {
+						heros.add((Hero) c);
+					}
+				}
+			}
+
+		}
+
 		return heros;
 	}
 	
@@ -319,7 +430,7 @@ public class ValorGame extends RPGGame {
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
 		playerList = new ArrayList<>();
-		monstersOnMap = new ArrayList<>();
+		monstersOnMap = new LinkedHashMap<>();
 		
 
 		

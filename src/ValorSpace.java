@@ -12,13 +12,15 @@ public abstract class ValorSpace extends Space{
 	public boolean enterSpace(Character c) {
 		if(c instanceof Hero && containHero()) {
 			return false;
+		} else if(c instanceof Monster && containMonster()) {
+			return false;
 		}
 		chars.add(c);
 		return true;
 	}
 	
 	public void exitSpace(Character c) {
-		
+		chars.remove(c);
 	}
 	
 	public ArrayList<Character> getChars() {

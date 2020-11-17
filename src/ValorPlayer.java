@@ -2,18 +2,18 @@ import java.util.*;
 
 public class ValorPlayer extends Player {
 	//Hashmap to track the hero and where his original lane is.
-	private HashMap<Hero, Location> heroes;
+	private LinkedHashMap<Hero, Location> heroes;
 	
 	public ValorPlayer() {
 		super();
-		heroes = new HashMap<Hero,Location> ();
+		heroes = new LinkedHashMap<Hero,Location> ();
 		
 	}
 	
 	public ValorPlayer(String name, String icon) {
 		// TODO Auto-generated constructor stub
 		super(name,icon);
-		heroes = new HashMap<Hero,Location> ();
+		heroes = new LinkedHashMap<Hero,Location> ();
 		
 	}
 
