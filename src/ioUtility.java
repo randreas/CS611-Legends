@@ -682,28 +682,28 @@ public class ioUtility {
 		String soundFile = null;
 		switch (sound) {
 		case "opening":
-			soundFile = "ConfigFiles\\opening.wav";
+			soundFile = "ConfigFiles/opening.wav";
 			break;
 		case "ending":
-			soundFile = "ConfigFiles\\ending.wav";
+			soundFile = "ConfigFiles/ending.wav";
 			break;
 		case "shop":
-			soundFile = "ConfigFiles\\shop.wav";
+			soundFile = "ConfigFiles/shop.wav";
 			break;
 		case "monsterbattle":
-			soundFile = "ConfigFiles\\monsterbattle.wav";
+			soundFile = "ConfigFiles/monsterbattle.wav";
 			break;
 		case "battlewin":
-			soundFile = "ConfigFiles\\monstervictory.wav";
+			soundFile = "ConfigFiles/monstervictory.wav";
 			break;
 		case "trainerbattle":
-			soundFile = "ConfigFiles\\trainerBattle.wav";
+			soundFile = "ConfigFiles/trainerBattle.wav";
 			break;
 		case "trainerbattlewin":
-			soundFile = "ConfigFiles\\trainerVictory.wav";
+			soundFile = "ConfigFiles/trainerVictory.wav";
 			break;
 		case "map":
-			soundFile = "ConfigFiles\\map.wav";
+			soundFile = "ConfigFiles/map.wav";
 			break;
 		}
 
@@ -897,10 +897,12 @@ public class ioUtility {
 		boolean isValid = false;
 		int lane = 0;
 		while(!isValid) {
-			System.out.println("Please select the lane. (1-" + map.getNumLanes());
+			System.out.println("Please select the lane. (1-" + map.getNumLanes() + ")" );
 			lane = parseInt();
 			if(lane < 0 || lane > map.getNumLanes()) {
 				printErrorParse();
+			} else {
+				isValid = true;
 			}
 		}
 		isValid = false;
