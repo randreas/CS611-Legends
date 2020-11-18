@@ -78,7 +78,9 @@ public abstract class Character {
 	public void setLocation(Location l) { this.location = l; };
 	public void setRow(int row) { this.location.setRow(row);}
 	public void setCol(int col) { this.location.setCol(col);}
-	public void setLane(int lane) { this.location.setLane(lane);}
+	public void setInitialLane(int lane) { this.location.setHome_lane(lane);
+		this.location.setCurrent_lane(lane);}
+	public void setCurrentLane(int lane) { this.location.setCurrent_lane(lane);}
 	
 	
 }

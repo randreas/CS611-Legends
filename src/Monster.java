@@ -82,5 +82,28 @@ public abstract class Monster extends Character implements Attacker{
 		}
 		return enemy_list;
 	}
+
+	public boolean enemyBlock(ValorMap world, String direction) {
+		if(direction.equals("S")) {
+			for(int j = this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1); j < this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
+				if(((ValorSpace) world.getMap()[this.getLocation().getRow()][j]).containHero()) {
+					return false;
+				}
+			}
+			return true;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public void move(ValorMap world) {
+		if(this.getLocation().getRow() + 1 < world.getRows() && !enemyBlock(world, "S")
+				&& !((ValorSpace) world.getMap()[this.getLocation().getRow() + 1][this.getLocation().getCol()]).containMonster()
+				&& ((ValorSpace) world.getMap()[this.getLocation().getRow() + 1][this.getLocation().getCol()]).getChars().size() < 2) {
+			world.getMap()[this.getLocation().getRow()][this.getLocation().getCol()].resetSpace();
+			((ValorSpace) world.getMap()[this.getLocation().getRow()][this.getLocation().getCol()]).exitSpace(this);
+		}
+	}
 	public abstract Monster clone();
 }

@@ -45,10 +45,9 @@ public class ValorPlayer extends Player {
 		map.mapAction(h,currLoc, nexusLoc);
 		return true;
 	}
-	
+
 	/*
 	 * Function for player to move on the ValorMap
-	 * TODO: Update Location
 	 */
 	public boolean move(Hero h, Location l, String dir, ValorMap map) {
 		int rowLoc = l.getRow();
@@ -59,10 +58,30 @@ public class ValorPlayer extends Player {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
-					map.getMap()[rowLoc][colLoc].resetSpace();
+					if(h.enemyBlock(map, "W")) {
+						System.out.println("You have to kill the monster to go up. Please go another way");
+						return false;
+					}
 					rowLoc--;
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).containHero()) {
+						System.out.println("Too many heroes in one cell. Please go another way");
+						return false;
+					}
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).getChars().size() == 2) {
+						System.out.println("Too many creatures in one cell. Please go another way");
+						return false;
+					}
+					map.getMap()[rowLoc + 1][colLoc].resetSpace();
+					((ValorSpace) map.getMap()[rowLoc + 1][colLoc]).exitSpace(h);
+					((ValorSpace) map.getMap()[rowLoc][colLoc]).enterSpace(h);
+					h.getLocation().setRow(rowLoc);
+					h.getLocation().setCol(colLoc);
+					if(rowLoc < h.getMinimal_dis_row()) {
+						h.setMinimal_dis_row(rowLoc);
+					}
+					return true;
 				}
-				
+
 			} else {
 				System.out.println("You cannot go any further. Please choose a valid movement input.");
 				return false;
@@ -73,8 +92,21 @@ public class ValorPlayer extends Player {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
-					map.getMap()[rowLoc][colLoc].resetSpace();
 					rowLoc++;
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).containHero()) {
+						System.out.println("Too many heroes in one cell. Please go another way");
+						return false;
+					}
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).getChars().size() == 2) {
+						System.out.println("Too many creatures in one cell. Please go another way");
+						return false;
+					}
+					map.getMap()[rowLoc - 1][colLoc].resetSpace();
+					((ValorSpace) map.getMap()[rowLoc - 1][colLoc]).exitSpace(h);
+					((ValorSpace) map.getMap()[rowLoc][colLoc]).enterSpace(h);
+					h.getLocation().setRow(rowLoc);
+					h.getLocation().setCol(colLoc);
+					return true;
 				}
 			} else {
 				System.out.println("You cannot go any further. Please choose a valid movement input.");
@@ -86,8 +118,21 @@ public class ValorPlayer extends Player {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
-					map.getMap()[rowLoc][colLoc].resetSpace();
 					colLoc--;
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).containHero()) {
+						System.out.println("Too many heroes in one cell. Please go another way");
+						return false;
+					}
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).getChars().size() == 2) {
+						System.out.println("Too many creatures in one cell. Please go another way");
+						return false;
+					}
+					map.getMap()[rowLoc][colLoc + 1].resetSpace();
+					((ValorSpace) map.getMap()[rowLoc][colLoc + 1]).exitSpace(h);
+					((ValorSpace) map.getMap()[rowLoc][colLoc]).enterSpace(h);
+					h.getLocation().setRow(rowLoc);
+					h.getLocation().setCol(colLoc);
+					return true;
 				}
 			} else {
 				System.out.println("You cannot go any further. Please choose a valid movement input.");
@@ -99,17 +144,30 @@ public class ValorPlayer extends Player {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
-					map.getMap()[rowLoc][colLoc].resetSpace();
 					colLoc++;
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).containHero()) {
+						System.out.println("Too many heroes in one cell. Please go another way");
+						return false;
+					}
+					if(((ValorSpace) map.getMap()[rowLoc][colLoc]).getChars().size() == 2) {
+						System.out.println("Too many creatures in one cell. Please go another way");
+						return false;
+					}
+					map.getMap()[rowLoc][colLoc - 1].resetSpace();
+					((ValorSpace) map.getMap()[rowLoc][colLoc - 1]).exitSpace(h);
+					((ValorSpace) map.getMap()[rowLoc][colLoc]).enterSpace(h);
+					h.getLocation().setRow(rowLoc);
+					h.getLocation().setCol(colLoc);
+					return true;
 				}
 			} else {
 				System.out.println("You cannot go any further. Please choose a valid movement input.");
 				return false;
 			}
 		}
-		
-		
-		
+
+
+
 		return true;
 
 
