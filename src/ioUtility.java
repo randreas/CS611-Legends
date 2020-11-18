@@ -967,6 +967,45 @@ public class ioUtility {
 		col = ((lane-1)*(map.getLaneSize()+1))+col;
 		return col;
 	}
+
+	public Location parseTeleportLocation(ValorMap world) {
+		boolean isValid = false;
+		int lane = 0;
+		while(!isValid) {
+			System.out.println("Please select the lane of destination. (1-" + world.getNumLanes() + ")" );
+			lane = parseInt();
+			if(lane < 0 || lane > world.getNumLanes()) {
+				printErrorParse();
+			} else {
+				isValid = true;
+			}
+		}
+		isValid = false;
+		int row = 0;
+		while(!isValid) {
+			System.out.println("Please select the row of destination. (1-" + world.getRows() + ")");
+			row = parseInt();
+			if(row < 0 || row > world.getRows()) {
+				printErrorParse();
+			} else {
+				isValid = true;
+			}
+		}
+
+		isValid = false;
+		int col = 0;
+		while(!isValid) {
+			System.out.println("Please select the column of destination. (1-" + world.getCols() + ")");
+			col = parseInt();
+			if(col < 0 || col > world.getCols()) {
+				printErrorParse();
+			} else {
+				isValid = true;
+			}
+		}
+		Location destination = new Location(lane, lane, row, col);
+		return destination;
+	}
 	
 	
 }
