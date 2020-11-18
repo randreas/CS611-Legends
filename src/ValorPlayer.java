@@ -31,16 +31,21 @@ public class ValorPlayer extends Player {
 	/*
 	 * Function for player to back to original lane and to nexus
 	 */
-	public void back(Hero h, ValorMap map) {
+	public boolean back(Hero h, ValorMap map) {
 		Location currLoc = h.getLocation();
-		int ogLane = h.getLocation().getLane();
+		int ogLane = h.getLocation().getHome_lane();
 		ioUtility io = new ioUtility();
 		Location nexusLoc = io.getNexusLocation(map,ogLane);
+		if(((ValorSpace) map.getMap()[nexusLoc.getRow()][nexusLoc.getCol()]).containHero()) {
+			return false;
+		}
 		((ValorSpace)map.getMap()[currLoc.getRow()][currLoc.getCol()]).exitSpace(h);
 		((ValorSpace)map.getMap()[nexusLoc.getRow()][nexusLoc.getCol()]).enterSpace(h);
 		h.setLocation(nexusLoc);
 		map.mapAction(h,currLoc, nexusLoc);
+		return true;
 	}
+	
 	/*
 	 * Function for player to move on the ValorMap
 	 * TODO: Update Location

@@ -17,7 +17,8 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 	private Stats dexterity;
 	private ioUtility io;
 	private final int maxLevel = 10;
-	
+	private int minimal_dis_row;
+
 	/*
 	 * Hero Constructor
 	 */
@@ -428,9 +429,49 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		return enemy_list;
 	}
 
+	public boolean teleport(Location destination, ValorMap world) {
+		if(destination.getRow() < 0 || destination.getCol() < 0 || destination.getRow() >= world.getRows() ||
+				destination.getCol() >= world.getCols()) {
+			return false;
+		}
+		ValorSpace[][] map = (ValorSpace[][])world.getMap();
+		if(map[destination.getRow()][destination.getCol()] instanceof InaccessibleSpace) {
+			return false;
+		}
+		if(map[destination.getRow()][destination.getCol()].getChars().size() >= 1) {
+			return false;
+		}
+		if(destination.getCurrent_lane() == this.getLocation().getCurrent_lane()) {
+			return false;
+		}
+		if(destination.getRow() < this.getMinimal_dis_row()) {
+			return false;
+		}
+		for(int i = destination.getRow(); i < world.getRows(); i++) {
+			for(int j = destination.getCurrent_lane() * (world.getLaneSize() + 1); j < destination.getCurrent_lane() * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
+				if(((ValorSpace) world.getMap()[i][j]).containMonster()) {
+					return false;
+				}
+			}
+		}
+		this.getLocation().setCurrent_lane(destination.getCurrent_lane());
+		this.getLocation().setRow(destination.getRow());
+		this.getLocation().setCol(destination.getCol());
+		((ValorSpace) world.getMap()[destination.getRow()][destination.getCol()]).enterSpace(this);
+		((ValorSpace) world.getMap()[destination.getRow()][destination.getCol()]).exitSpace(this);
+		return true;
+	}
+
 	public int getMaxLevel() {
 		return maxLevel;
 	}
-	
+
+	public int getMinimal_dis_row() {
+		return minimal_dis_row;
+	}
+
+	public void setMinimal_dis_row(int minimal_dis_row) {
+		this.minimal_dis_row = minimal_dis_row;
+	}
 
 }
