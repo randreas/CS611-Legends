@@ -303,6 +303,22 @@ public class ValorGame extends RPGGame {
 							} else {
 								//TODO: Choose enemy to attack
 								System.out.println("Time to attack");
+								ArrayList<Monster> monsters_list = new ArrayList<>();
+								for(Character c : enemies) {
+									monsters_list.add((Monster) c);
+								}
+								io.printMonsters(monsters_list);
+								int monster_choice = io.parseMonsterChoice(monsters_list);
+								while (monster_choice == -1) {
+									System.out.println("Invalid input of monster choice. Please try again.");
+									monster_choice = io.parseMonsterChoice(monsters_list);
+								}
+								boolean attack_sucess = h.attack(monsters_list.get(monster_choice));
+								if(attack_sucess) {
+									System.out.println("Attack success");
+								} else {
+									System.out.println("The monster dodges this attack");
+								}
 							}
 							hasMoved = true;
 						} else {
@@ -318,6 +334,28 @@ public class ValorGame extends RPGGame {
 							} else {
 								//TODO: Choose enemy to spell
 								System.out.println("Time to spell cast");
+								io.printSpellList(h.getInventory().getSpellList());
+								int spell_choice = io.parseSpellChoice(h.getInventory().getSpellList());
+								while(spell_choice == -1) {
+									System.out.println("Invalid input of spell choice. Please try again.");
+									spell_choice = io.parseSpellChoice(h.getInventory().getSpellList());
+								}
+								ArrayList<Monster> monsters_list = new ArrayList<>();
+								for(Character c : enemies) {
+									monsters_list.add((Monster) c);
+								}
+								io.printMonsters(monsters_list);
+								int monster_choice = io.parseMonsterChoice(monsters_list);
+								while (monster_choice == -1) {
+									System.out.println("Invalid input of monster choice. Please try again.");
+									monster_choice = io.parseMonsterChoice(monsters_list);
+								}
+								boolean spell_sucess = h.spellCast(h.getInventory().getSpellList().get(spell_choice), monsters_list.get(monster_choice));
+								if(spell_sucess) {
+									System.out.println("Casting spell success");
+								} else {
+									System.out.println("The monster dodges this spell");
+								}
 							}
 							hasMoved = true;
 						} else {
@@ -327,6 +365,11 @@ public class ValorGame extends RPGGame {
 					case "F":
 						//TODO: Teleport
 						//h.teleport(h.getLocation(), (ValorMap) getMap());
+						boolean teleport_success = false;
+						while (!teleport_success) {
+							Location des = io.parseTeleportLocation((ValorMap) getMap());
+							teleport_success = h.teleport(des, (ValorMap) getMap());
+						}
 						break;
 					case "B":
 						//Back
