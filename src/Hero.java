@@ -432,24 +432,34 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 	public boolean teleport(Location destination, ValorMap world) {
 		if(destination.getRow() < 0 || destination.getCol() < 0 || destination.getRow() >= world.getRows() ||
 				destination.getCol() >= world.getCols()) {
+			System.out.println("Invalid action! You are teleporting out of the map.");
 			return false;
 		}
 		ValorSpace[][] map = (ValorSpace[][])world.getMap();
 		if(map[destination.getRow()][destination.getCol()] instanceof InaccessibleSpace) {
+			System.out.println("Invalid action! You can't teleport to a inaccessible place.");
 			return false;
 		}
-		if(map[destination.getRow()][destination.getCol()].getChars().size() >= 1) {
+		if(map[destination.getRow()][destination.getCol()].getChars().size() >= 2) {
+			System.out.println("Invalid action! You can't teleport to a cell which is full.");
+			return false;
+		}
+		if(map[destination.getRow()][destination.getCol()].containHero()) {
+			System.out.println("Invalid action! You can't teleport to a cell which already occupied by a hero.");
 			return false;
 		}
 		if(destination.getCurrent_lane() == this.getLocation().getCurrent_lane()) {
+			System.out.println("Invalid action! You can't teleport to a cell in the same lane.");
 			return false;
 		}
 		if(destination.getRow() < this.getMinimal_dis_row()) {
+			System.out.println("Invalid action! You can't teleport to an unexplored cell.");
 			return false;
 		}
 		for(int i = destination.getRow(); i < world.getRows(); i++) {
 			for(int j = destination.getCurrent_lane() * (world.getLaneSize() + 1); j < destination.getCurrent_lane() * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
 				if(((ValorSpace) world.getMap()[i][j]).containMonster()) {
+					System.out.println("Invalid action! You can't teleport to a cell which behind the monster.");
 					return false;
 				}
 			}
@@ -459,6 +469,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		this.getLocation().setCol(destination.getCol());
 		((ValorSpace) world.getMap()[destination.getRow()][destination.getCol()]).enterSpace(this);
 		((ValorSpace) world.getMap()[destination.getRow()][destination.getCol()]).exitSpace(this);
+		System.out.println("Teleport success!");
 		return true;
 	}
 
