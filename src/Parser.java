@@ -15,7 +15,13 @@ public class Parser {
 	 */
 	public List<String> readFileInList(String fileName) { 
 		List<String> lines = Collections.emptyList(); 
-		try { 
+		try {
+//			InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
+//			BufferedReader bufferedReader = new BufferedReader(read);
+//			String lineTxt
+//			while((lineTxt = bufferedReader.readLine()) != null) {
+//
+//			}
 			lines =  Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8); 
 		} catch (IOException e) { 
 			System.out.println("Please enter the correct filepath");
@@ -272,7 +278,18 @@ public class Parser {
 	 * Function to parse file into a list of Warriors
 	 */
 	public List<Hero> parseWarriors() {
+/*ClassLoader classLoader = CopyFileToDirectoryTest.class.getClassLoader();
+        InputStream in = classLoader.getResourceAsStream("com//stackoverflow//main//Movie.class");
+        URI uri = ClassLoader.getSystemResource("com//stackoverflow//json").toURI();
+        String mainPath = Paths.get(uri).toString();
+        Path path = Paths.get(mainPath, "Movie.class");
+        System.out.println(path);
+        long copy = Files.copy(in, path, StandardCopyOption.REPLACE_EXISTING);
+        System.out.println(copy);
+
+ */
 		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Warriors.txt";
+		file = file.substring(1);
 		System.out.println(file);
 		List<String> l = readFileInList(file);
 		  
