@@ -269,8 +269,10 @@ public class ioUtility {
 		System.out.println("Check Hero Info (I)");
 		System.out.println("Check Inventory (E)");
 		System.out.println("Check Map (M)");
-		System.out.println("Attack (A)");
-		System.out.println("Cast Spell (S)");
+		System.out.println("Attack (G)");
+		System.out.println("Cast Spell (H)");
+		System.out.println("Teleport (F)");
+		System.out.println("Back to Nexus (B)");
 		System.out.println("End Turn (T)");
 		System.out.println("Quit (Q)");
 
@@ -278,7 +280,8 @@ public class ioUtility {
 		boolean isValidString  = false;
 		while(!isValidString) {
 			if(s.equals("W") || s.equals("A") || s.equals("S")  || s.equals("D")  || s.equals("I")
-					|| s.equals("E")  || s.equals("M") ||  s.equals("T") ||  s.equals("Q")) {
+					|| s.equals("E")  || s.equals("M") ||  s.equals("T") ||  s.equals("Q") || s.equals("F")
+					|| s.equals("G")  || s.equals("B")  || s.equals("H") ) {
 				isValidString = true;
 			} else {
 				printErrorParse();
@@ -954,7 +957,7 @@ public class ioUtility {
 		}
 
 
-		Location l = new Location(lane,lane,map.lagetRows()-1, col);
+		Location l = new Location(lane,lane,map.getRows()-1, col);
 		return l;
 	}
 	

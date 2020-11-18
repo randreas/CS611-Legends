@@ -310,6 +310,7 @@ public class ValorGame extends RPGGame {
 						}
 						break;
 					case "H":
+						//Spell cast
 						if (!hasMoved) {
 							ArrayList<Character> enemies = h.spotEnemy((ValorMap) getMap());
 							if (enemies.size() == 0) {
@@ -325,7 +326,7 @@ public class ValorGame extends RPGGame {
 						break;
 					case "F":
 						//TODO: Teleport
-						h.teleport(h.getLocation(), (ValorMap) getMap());
+						//h.teleport(h.getLocation(), (ValorMap) getMap());
 						break;
 					case "B":
 						//Back
