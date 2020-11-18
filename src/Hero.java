@@ -112,9 +112,14 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 	 */
 	public void resurrect() {
 		setHp((int)(100*getLevel()*0.5));
-		
 	}
-	
+
+	/*
+	 * Function for hero to gain back his original hp when he respawns
+	 */
+	public void respawn() {
+		setHp((int)(100*getLevel()));
+	}
 	/*
 	 * Function for hero to regenerate health and mana
 	 */

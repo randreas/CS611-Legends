@@ -273,7 +273,7 @@ public class ValorGame extends RPGGame {
 			if(c2 instanceof Hero) {
 				//If hero dies, spawn back at nexus half health, gets to buy item?
 				p.back((Hero)c2,(ValorMap)getMap());
-				((Hero)c2).resurrect();
+				((Hero)c2).respawn();
 			} else if (c2 instanceof Monster) {
 				//Hero c1 has killed a monster
 				monstersOnMap.remove(c2);
@@ -290,7 +290,6 @@ public class ValorGame extends RPGGame {
 	 * Function to check which heroes chosen monster can attack
 	 */
 	public ArrayList<Hero> checkMonsterVicinity(Monster m) {
-		//TODO: implement code
 		ArrayList<Hero> heros = new ArrayList<>();
 		Location l = m.getLocation();
 		//Check current space
@@ -379,7 +378,6 @@ public class ValorGame extends RPGGame {
 	 * 	0 if no winner.
 	 * 	1 if player has won
 	 * 	2 if monster has won
-	 * 	3 if tie
 	 */
 	public int roundResult() {
 		//check top row if any heroes
@@ -411,7 +409,7 @@ public class ValorGame extends RPGGame {
 		}
 		
 		if(monsterWin && heroWin) {
-			return 3;
+			return 1;
 		} else if(monsterWin) {
 			return 2;
 		} else if(heroWin) {
