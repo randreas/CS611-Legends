@@ -402,7 +402,31 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		}
 		return inventory.getSpellList().get(io.parseSpellChoice(inventory.getSpellList()));
 	}
-	
+
+	/*
+	 * Function that returns the enemy list that character c can attack
+	 * e.g. c.spotEnemy(world) will return the enemy list that c can attack
+	 */
+	public ArrayList<Character> spotEnemy(ValorMap world) {
+		ArrayList<Character> enemy_list = new ArrayList<>();
+		Location current_location = this.getLocation();
+		for(int i = current_location.getRow() - 1; i <= current_location.getRow() + 1; i++) {
+			for(int j = current_location.getRow() - 1; j <= current_location.getRow() + 1; j++) {
+				if(i < 0 || j < 0 || i >= world.getRows() || j > world.getCols()) {
+					continue;
+				}
+				ValorSpace[][] map = (ValorSpace[][]) world.getMap();
+				if(map[i][j].getChars().size() > 0) {
+					for(Character c : map[i][j].getChars()) {
+						if(c instanceof Monster) {
+							enemy_list.add(c);
+						}
+					}
+				}
+			}
+		}
+		return enemy_list;
+	}
 
 	public int getMaxLevel() {
 		return maxLevel;

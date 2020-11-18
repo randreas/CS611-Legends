@@ -3,24 +3,34 @@
  */
 public class Location {
 	//Original Lane, do not change if TP out
-	private int lane;
+	private int home_lane;
+	private int current_lane;
 	
 	//Row and Col of the current position based on the map
 	private int row;
 	private int col;
-	
-	public Location(int lane, int row, int col) {
-		this.setLane(lane);
+
+	public Location(int home_lane, int current_lane, int row, int col) {
+		this.setHome_lane(home_lane);
+		this.setCurrent_lane(current_lane);
 		this.setRow(row);
 		this.setCol(col);
 	}
 
-	public int getLane() {
-		return lane;
+	public int getHome_lane() {
+		return home_lane;
 	}
 
-	public void setLane(int lane) {
-		this.lane = lane;
+	public void setHome_lane(int home_lane) {
+		this.home_lane = home_lane;
+	}
+
+	public int getCurrent_lane() {
+		return current_lane;
+	}
+
+	public void setCurrent_lane(int current_lane) {
+		this.current_lane = current_lane;
 	}
 
 	public int getRow() {
