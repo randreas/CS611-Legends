@@ -9,7 +9,7 @@ public class ValorGame extends RPGGame {
 	private List<Monster> monsters;
 	private Inventory itemInven;
 	private ioUtility io;
-	private List<ValorPlayer> playerList;
+	private ValorPlayer player;
 	private int numHeroesTeam = 3;
 	private List<String> iconList;
 	private int numRound = 1;
@@ -21,8 +21,8 @@ public class ValorGame extends RPGGame {
 	public void startGame() {
 		initializeMap();
 		//TODO: implement code
-		playerList.add(initializePlayer(0));
-		chooseHeros(playerList.get(0));
+		initializePlayer(0);
+		chooseHeros(player);
 		gameRound();
 		
 		
@@ -159,20 +159,25 @@ public class ValorGame extends RPGGame {
 	}
 	
 	public void gameRound() {
-		
+
+
 		if(numRound == 1 || numRound % 8 == 0) {
 			spawnMonster();
 		}
 		io.printFullValorMap((ValorMap) getMap());
-		playerTurn();
+		boolean continueGame = playerTurn();
 		System.out.println("===============================================");
-		monsterTurn();
+		if(continueGame) {
+			monsterTurn();
+		}
+
 		io.printFullValorMap((ValorMap) getMap());
 		numRound++;
-		int results = roundResult();
+		int results = roundResult(continueGame);
 		if(results == 0) {
-		//	gameRound();
+
 			System.out.println("No winner");
+			gameRound();
 		} else if(results == 1) {
 			System.out.println("Player Wins");
 		} else if(results == 2) {
@@ -188,7 +193,7 @@ public class ValorGame extends RPGGame {
 	 */
 	public void spawnMonster() {
 		int maxLevel = 0;
-		for(Hero h : playerList.get(0).getHeroes()) {
+		for(Hero h : player.getHeroes()) {
 			if(h.getLevel() > maxLevel) {
 				maxLevel = h.getLevel();
 			}
@@ -207,7 +212,7 @@ public class ValorGame extends RPGGame {
 
 			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i+1);
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
-			Location loc = new Location(i+1,0,colSpawn);
+			Location loc = new Location(i+1,0,colSpawn, colSpawn);
 			m.setLocation(loc);
 			monstersOnMap.add(m);
 			s.enterSpace(m);
@@ -218,17 +223,125 @@ public class ValorGame extends RPGGame {
 	/*
 	 * Function that prompts users what actions to take, check if action is valid, perform action
 	 */
-	public void playerTurn() {
-		//For every player in the game
-		for(ValorPlayer p : playerList) {
-			//For every hero that the player has
-			for(Hero h : p.getHeroes()) {
+	public boolean playerTurn() {
+		for (Hero h : player.getHeroes()) {
+			boolean isValidMove = false;
+			boolean hasMoved = false;
+			boolean firstMove = false;
+			boolean turnEnds = false;
+			io.playSound("map");
+
+			while (!turnEnds) {
+				if (!firstMove) {
+					io.printFullValorMap((ValorMap) getMap());
+					firstMove = true;
+				}
+
+				System.out.println("It is " + player.getName() + "(" + player.getIcon() + ") turn to move.");
+
+
+				String choice = io.choiceValorMenu();
+				switch (choice) {
+					case "W":
+					case "A":
+					case "S":
+					case "D":
+						if (!hasMoved) {
+							Location l1 = h.getLocation();
+							isValidMove = player.move(h,h.getLocation(), choice, (ValorMap) getMap());
+
+							if (isValidMove) {
+								Location l2 = h.getLocation();
+								((ValorMap) getMap()).mapAction(h,l1,l2);
+								hasMoved = true;
+								io.printFullValorMap((ValorMap) getMap());
+
+							}
+
+
+						} else {
+							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
+						}
+						break;
+					case "E":
+
+
+						System.out.println(h.getName() + "'s Inventory");
+						if (h.getInventory().isEmpty()) {
+							System.out.println(ConsoleColors.GREEN_BRIGHT + "Inventory is empty. Nothing to do or see here" + ConsoleColors.RESET);
+							System.out.println();
+						} else {
+							h.getInventory().printInventory();
+							System.out.println("Do you want to equip or use an Item? (Y/N)");
+							boolean yn = io.parseYesNo();
+							if (yn) {
+								h.useItem();
+							}
+
+						}
+						break;
+					case "I":
+						player.printPlayer();
+						break;
+					case "M":
+						io.printFullValorMap((ValorMap) getMap());
+						break;
+					case "Q":
+						System.out.println("Player has surrendered. Monsters win");
+						isValidMove = true;
+						return false;
+
+					case "T":
+						turnEnds = true;
+						break;
+					case "G":
+						//attack
+						if (!hasMoved) {
+							ArrayList<Character> enemies = h.spotEnemy((ValorMap) getMap());
+							if (enemies.size() == 0) {
+								System.out.println("No enemies to attack");
+							} else {
+								//TODO: Choose enemy to attack
+								System.out.println("Time to attack");
+							}
+							hasMoved = true;
+						} else {
+							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
+						}
+						break;
+					case "H":
+						if (!hasMoved) {
+							ArrayList<Character> enemies = h.spotEnemy((ValorMap) getMap());
+							if (enemies.size() == 0) {
+								System.out.println("No enemies to cast spell");
+							} else {
+								//TODO: Choose enemy to spell
+								System.out.println("Time to spell cast");
+							}
+							hasMoved = true;
+						} else {
+							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
+						}
+						break;
+					case "F":
+						//TODO: Teleport
+						h.teleport(h.getLocation(), (ValorMap) getMap());
+						break;
+					case "B":
+						//Back
+						player.back(h, (ValorMap) getMap());
+						break;
+				}
+
 
 			}
-		}
 
+			System.out.println(h.getName() + "\'s Turn Ends.");
+		}
+		return true;
 	}
-	
+
+
 	/*
 	 * Function to automatically call monsters turn
 	 */
@@ -256,7 +369,7 @@ public class ValorGame extends RPGGame {
 				} else {
 					io.printDodgeScene(heroesAvailable.get(heroIdx));
 				}
-				characterDie(playerList.get(0),m,heroesAvailable.get(heroIdx));
+				characterDie(player,m,heroesAvailable.get(heroIdx));
 			}
 		}
 
@@ -379,7 +492,10 @@ public class ValorGame extends RPGGame {
 	 * 	1 if player has won
 	 * 	2 if monster has won
 	 */
-	public int roundResult() {
+	public int roundResult(boolean continueGame) {
+		if(!continueGame) {
+			return 2;
+		}
 		//check top row if any heroes
 		ValorMap map = (ValorMap) getMap();
 		Space[][] m =  map.getMap();
@@ -438,7 +554,6 @@ public class ValorGame extends RPGGame {
 		paladinList = p.parsePaladins();
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
-		playerList = new ArrayList<>();
 		monstersOnMap = new ArrayList<>();
 		
 

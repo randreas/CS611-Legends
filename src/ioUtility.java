@@ -270,6 +270,7 @@ public class ioUtility {
 		System.out.println("Check Inventory (E)");
 		System.out.println("Check Map (M)");
 		System.out.println("Attack (A)");
+		System.out.println("Cast Spell (S)");
 		System.out.println("End Turn (T)");
 		System.out.println("Quit (Q)");
 
@@ -711,7 +712,7 @@ public class ioUtility {
 		String soundFile = this.getClass().getResource("").getPath() ;
 
 		switch (sound) {
-		case "opening":
+		case "choice":
 			soundFile += "ConfigFiles/opening.wav";
 			break;
 		case "ending":
@@ -953,7 +954,7 @@ public class ioUtility {
 		}
 
 
-		Location l = new Location(lane,map.getRows()-1, col);
+		Location l = new Location(lane,lane,map.lagetRows()-1, col);
 		return l;
 	}
 	

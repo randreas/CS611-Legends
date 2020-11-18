@@ -172,4 +172,10 @@ public class ValorPlayer extends Player {
 
 
 	}
+
+	public void printPlayer() {
+		System.out.println(getName() + "'s Team:");
+		ioUtility io = new ioUtility();
+		io.printHeroes(heroes);
+	}
 }
