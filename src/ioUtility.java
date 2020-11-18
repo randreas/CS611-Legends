@@ -680,7 +680,7 @@ public class ioUtility {
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         java.awt.Graphics g =  image.getGraphics();
-        g.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 16));
+        g.setFont(new Font("SansSerif", Font.BOLD, 16));
 
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,

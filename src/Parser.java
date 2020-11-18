@@ -273,7 +273,7 @@ public class Parser {
 	 */
 	public List<Hero> parseWarriors() {
 		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Warriors.txt";
-
+		System.out.println(file);
 		List<String> l = readFileInList(file);
 		  
 	    Iterator<String> itr = l.iterator(); 
