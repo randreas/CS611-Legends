@@ -16,12 +16,7 @@ public class Parser {
 	public List<String> readFileInList(String fileName) { 
 		List<String> lines = Collections.emptyList(); 
 		try {
-//			InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
-//			BufferedReader bufferedReader = new BufferedReader(read);
-//			String lineTxt
-//			while((lineTxt = bufferedReader.readLine()) != null) {
-//
-//			}
+
 			lines =  Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8); 
 		} catch (IOException e) { 
 			System.out.println("Please enter the correct filepath");
@@ -34,7 +29,9 @@ public class Parser {
 	 * Function to parse file into a list of armors
 	 */
 	public List<Armor> parseArmor() {
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/";
 
 		List<String> l = readFileInList(file + "Armory.txt");
 
@@ -59,7 +56,9 @@ public class Parser {
 	 * Function to parse file into a list of Weapons
 	 */
 	public List<Weapon> parseWeapon() {
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/";
 
 		List<String> l = readFileInList(file + "Weaponry.txt");
 
@@ -85,7 +84,9 @@ public class Parser {
 	 * Function to parse file into a list of Spells
 	 */
 	public List<Spell> parseSpell() {
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/";
 
 		List<String> l = readFileInList(file + "FireSpells.txt");
 
@@ -104,6 +105,7 @@ public class Parser {
 					Integer.parseInt(s[4]));
 	    	spellList.add(spell);
 	    }
+
 
 		l = readFileInList(file + "IceSpells.txt");
 
@@ -141,8 +143,9 @@ public class Parser {
 	 * Function to parse file into a list of Potions
 	 */
 	public LinkedHashMap<Potion,Integer> parsePotion() {
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
-
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/";
 		List<String> l = readFileInList(file + "Potions.txt");
 
 	    Iterator<String> itr = l.iterator();
@@ -168,8 +171,9 @@ public class Parser {
 	 * Function to parse file into a list of Dragons
 	 */
 	public List<Monster> parseMonsters() {
-
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/";
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/";
 
 		List<String> l = readFileInList(file + "Dragons.txt");
 		 
@@ -186,8 +190,8 @@ public class Parser {
 	    			new Stats(StatType.AGILITY, Integer.parseInt(s[4])));
 	    	monsterList.add(monster);
 	    }
-	    
-	    
+
+
 		l = readFileInList(file + "Exoskeletons.txt");
 		itr = l.iterator(); 
 	    itr.next();
@@ -201,9 +205,8 @@ public class Parser {
 	    			new Stats(StatType.AGILITY, Integer.parseInt(s[4])));
 	    	monsterList.add(monster);
 	    }
-	    
-	    l = readFileInList(file + "Spirits.txt");
-		itr = l.iterator(); 
+		l = readFileInList(file + "Exoskeletons.txt");
+		itr = l.iterator();
 	    itr.next();
 	    while (itr.hasNext()) {	
 	    	String data = itr.next();
@@ -222,7 +225,9 @@ public class Parser {
 	 * Function to parse file into a list of Paladins
 	 */
 	public List<Hero> parsePaladins() {
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Paladins.txt";
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/Paladins.txt";
 
 		List<String> l = readFileInList(file);
 	    
@@ -250,7 +255,9 @@ public class Parser {
 	 * Function to parse file into a list of Sorcerers
 	 */
 	public List<Hero> parseSorcerers() {
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Sorcerers.txt";
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/Sorcerers.txt";
 
 		List<String> l = readFileInList(file);
 		  
@@ -282,7 +289,6 @@ public class Parser {
 		String file = this.getClass().getResource("").getPath();
 		file = file.substring(1,file.length()-4) + "src/";
 		file += "ConfigFiles/Warriors.txt";
-		System.out.println(file);
 		List<String> l = readFileInList(file);
 		  
 	    Iterator<String> itr = l.iterator(); 
