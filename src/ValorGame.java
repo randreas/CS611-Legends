@@ -148,7 +148,7 @@ public class ValorGame extends RPGGame {
 				break;
 			}
 			
-			Location loc = io.parseInitalLaneLocation((ValorMap) getMap());
+			Location loc = io.parseInitialLaneLocation((ValorMap) getMap());
 			chosenHero.setLocation(loc);
 			ValorSpace s = (ValorSpace) getMap().getMap()[loc.getRow()][loc.getCol()];
 			s.enterSpace(chosenHero);

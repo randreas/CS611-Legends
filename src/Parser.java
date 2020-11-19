@@ -278,18 +278,10 @@ public class Parser {
 	 * Function to parse file into a list of Warriors
 	 */
 	public List<Hero> parseWarriors() {
-/*ClassLoader classLoader = CopyFileToDirectoryTest.class.getClassLoader();
-        InputStream in = classLoader.getResourceAsStream("com//stackoverflow//main//Movie.class");
-        URI uri = ClassLoader.getSystemResource("com//stackoverflow//json").toURI();
-        String mainPath = Paths.get(uri).toString();
-        Path path = Paths.get(mainPath, "Movie.class");
-        System.out.println(path);
-        long copy = Files.copy(in, path, StandardCopyOption.REPLACE_EXISTING);
-        System.out.println(copy);
 
- */
-		String file = this.getClass().getResource("").getPath() + "ConfigFiles/Warriors.txt";
-		file = file.substring(1);
+		String file = this.getClass().getResource("").getPath();
+		file = file.substring(1,file.length()-4) + "src/";
+		file += "ConfigFiles/Warriors.txt";
 		System.out.println(file);
 		List<String> l = readFileInList(file);
 		  

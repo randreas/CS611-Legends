@@ -122,7 +122,7 @@ public class ioUtility {
 	}
 	
 	/*
-	 * Function for users to parse heroclass chosen.
+	 * Function for users to parse hero class chosen.
 	 */
 	public HeroClass parseHeroClass() {
 		boolean validParse = false;
@@ -158,7 +158,7 @@ public class ioUtility {
 	}
 	
 	/*
-	 * Function to print heroes list based on heroclass
+	 * Function to print heroes list based on hero class
 	 */
 	public void printHeroes(List<Hero> list,HeroClass heroClass) {
 		System.out.println(heroClass.toString() + " List");
@@ -688,8 +688,6 @@ public class ioUtility {
         graphics.drawString(string, 10, 20);
 
         //save this image
-        //ImageIO.write(image, "png", new File("/users/mkyong/ascii-art.png"));
-
         for (int y = 0; y < height; y++) {
             StringBuilder sb = new StringBuilder();
             for (int x = 0; x < width; x++) {
@@ -927,7 +925,7 @@ public class ioUtility {
         }
 	}
 	
-	public Location parseInitalLaneLocation(ValorMap map) {
+	public Location parseInitialLaneLocation(ValorMap map) {
 		boolean isValid = false;
 		int lane = 0;
 		while(!isValid) {
