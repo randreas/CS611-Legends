@@ -540,7 +540,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 	public boolean enemyBlock(ValorMap world, String direction) {
 		if(direction.equals("W")) {
-			for(int j = this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1); j < this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
+			for(int j = (this.getLocation().getCurrent_lane() - 1) * (world.getLaneSize() + 1); j < (this.getLocation().getCurrent_lane() - 1) * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
 				if(((ValorSpace) world.getMap()[this.getLocation().getRow()][j]).containMonster()) {
 					return true;
 				}
