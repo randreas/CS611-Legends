@@ -321,8 +321,9 @@ public class ValorGame extends RPGGame {
 								} else {
 									System.out.println("The monster dodges this attack");
 								}
+								hasMoved = true;
 							}
-							hasMoved = true;
+
 						} else {
 							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
 						}
@@ -358,8 +359,9 @@ public class ValorGame extends RPGGame {
 								} else {
 									System.out.println("The monster dodges this spell");
 								}
+								hasMoved = true;
 							}
-							hasMoved = true;
+
 						} else {
 							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
 						}
