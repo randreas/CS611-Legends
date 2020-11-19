@@ -926,22 +926,7 @@ public class ioUtility {
         }
 	}
 	
-	public Location parseInitialLaneLocation(ValorMap map) {
-		boolean isValid = false;
-		int lane = 0;
-		while(!isValid) {
-			System.out.println("Please select the lane. (1-" + map.getNumLanes() + ")" );
-			lane = parseInt();
-			if(lane < 0 || lane > map.getNumLanes()) {
-				printErrorParse();
-			} else {
-				isValid = true;
-			}
-		}
-		Location l = getNexusLocation(map,lane);
-		return l;
-		
-	}
+
 
 	public Location getNexusLocation(ValorMap map, int lane) {
 		boolean isValid = false;

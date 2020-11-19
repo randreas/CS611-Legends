@@ -479,7 +479,6 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 			}
 
 		}
-
 		return enemy_list;
 	}
 

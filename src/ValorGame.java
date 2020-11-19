@@ -124,38 +124,38 @@ public class ValorGame extends RPGGame {
 		System.out.println(player.getName() +", it is time to build your team, you're just a human so I don't think you can defeat these monsters");
 		System.out.println("Each lane can only have 1 hero initially.");
 		System.out.println();
-		while(player.getHeroes().size() < numHeroesTeam) {
+		for(int i = 0; i < ((ValorMap)getMap()).getNumLanes(); i++) {
+			System.out.println("For Lane" + (i+1) + ", please select your hero");
 			HeroClass chosenHeroClass = io.parseHeroClass();
 			Hero chosenHero = null;
 			int index;
 			switch(chosenHeroClass) {
-			case PALADIN:
-				index = io.parseHeroId(paladinList,chosenHeroClass);
-				chosenHero = paladinList.get(index);
-				paladinList.remove(index);
-				break;
-			case SORCERER:
-				index = io.parseHeroId(sorcererList,chosenHeroClass);
-				chosenHero = sorcererList.get(index);
-				sorcererList.remove(index);
-				break;
-			case WARRIOR:
-				index = io.parseHeroId(warriorList, chosenHeroClass);
-				chosenHero = warriorList.get(index);
-				warriorList.remove(index);
-				break;
-			default:
-				break;
+				case PALADIN:
+					index = io.parseHeroId(paladinList,chosenHeroClass);
+					chosenHero = paladinList.get(index);
+					paladinList.remove(index);
+					break;
+				case SORCERER:
+					index = io.parseHeroId(sorcererList,chosenHeroClass);
+					chosenHero = sorcererList.get(index);
+					sorcererList.remove(index);
+					break;
+				case WARRIOR:
+					index = io.parseHeroId(warriorList, chosenHeroClass);
+					chosenHero = warriorList.get(index);
+					warriorList.remove(index);
+					break;
+				default:
+					break;
 			}
-			
-			Location loc = io.parseInitialLaneLocation((ValorMap) getMap());
+			Location loc = io.getNexusLocation((ValorMap) getMap(), i+1);
 			chosenHero.setLocation(loc);
 			ValorSpace s = (ValorSpace) getMap().getMap()[loc.getRow()][loc.getCol()];
 			s.enterSpace(chosenHero);
 			player.addHero(chosenHero);
-		
-			
+
 		}
+		
 	}
 	
 	public void gameRound() {
@@ -318,8 +318,10 @@ public class ValorGame extends RPGGame {
 								boolean attack_sucess = h.attack(monsters_list.get(monster_choice));
 								if(attack_sucess) {
 									System.out.println("Attack success");
+									io.printAttackScene(h,monsters_list.get(monster_choice),h.calculateDmg(monsters_list.get(monster_choice)));
 								} else {
 									System.out.println("The monster dodges this attack");
+									io.printDodgeScene(monsters_list.get(monster_choice));
 								}
 								hasMoved = true;
 							}
@@ -353,11 +355,11 @@ public class ValorGame extends RPGGame {
 									System.out.println("Invalid input of monster choice. Please try again.");
 									monster_choice = io.parseMonsterChoice(monsters_list);
 								}
-								boolean spell_sucess = h.spellCast(h.getInventory().getSpellList().get(spell_choice), monsters_list.get(monster_choice));
-								if(spell_sucess) {
-									System.out.println("Casting spell success");
+								boolean spell_success = h.spellCast(h.getInventory().getSpellList().get(spell_choice), monsters_list.get(monster_choice));
+								if(spell_success) {
+									io.printSpellScene(h,monsters_list.get(monster_choice),h.getInventory().getSpellList().get(spell_choice),h.spellDamage(h.getInventory().getSpellList().get(spell_choice),monsters_list.get(monster_choice)));
 								} else {
-									System.out.println("The monster dodges this spell");
+									io.printDodgeScene(monsters_list.get(monster_choice));
 								}
 								hasMoved = true;
 							}
@@ -367,8 +369,7 @@ public class ValorGame extends RPGGame {
 						}
 						break;
 					case "F":
-						//TODO: Teleport
-						//h.teleport(h.getLocation(), (ValorMap) getMap());
+
 						boolean teleport_success = false;
 						while (!teleport_success) {
 							Location des = io.parseTeleportLocation((ValorMap) getMap());
@@ -384,7 +385,7 @@ public class ValorGame extends RPGGame {
 
 			}
 
-			System.out.println(h.getName() + "\'s Turn Ends.");
+			System.out.println(h.getName() + "'s Turn Ends.");
 		}
 		return true;
 	}
