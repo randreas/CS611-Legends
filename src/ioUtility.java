@@ -710,7 +710,8 @@ public class ioUtility {
 	public void playSound(String sound )  {
 		 
 		// open the sound file as a Java input stream
-		String soundFile = this.getClass().getResource("").getPath() ;
+		String soundFile = this.getClass().getResource("").getPath();
+		soundFile = soundFile.substring(1,soundFile.length()-4) + "src/";
 
 		switch (sound) {
 		case "choice":
@@ -751,9 +752,9 @@ public class ioUtility {
 			// open audioInputStream to the clip
 			clip.open(audioStream);
 
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
+		//	clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-			clip.start();
+		//	clip.start();
 		} catch (Exception e) {
 			printErrorParse();
 		}

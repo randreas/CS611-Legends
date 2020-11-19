@@ -91,7 +91,7 @@ public class ValorGame extends RPGGame {
 	/*
 	 * Function to initialize player
 	 */
-	public ValorPlayer initializePlayer(int i) {
+	public void initializePlayer(int i) {
 		System.out.println("Player" + (i+1) + ", please enter your name:");
 		String name = io.parseString();
 		
@@ -112,7 +112,7 @@ public class ValorGame extends RPGGame {
 			}
 		}
 		
-		return new ValorPlayer(name,icon);
+		player = new ValorPlayer(name,icon);
 
 	
 	}
@@ -122,7 +122,7 @@ public class ValorGame extends RPGGame {
 	 */
 	public void chooseHeros(ValorPlayer player) {
 		System.out.println(player.getName() +", it is time to build your team, you're just a human so I don't think you can defeat these monsters");
-		
+		System.out.println("Each lane can only have 1 hero initially.");
 		System.out.println();
 		while(player.getHeroes().size() < numHeroesTeam) {
 			HeroClass chosenHeroClass = io.parseHeroClass();
@@ -164,7 +164,6 @@ public class ValorGame extends RPGGame {
 		if(numRound == 1 || numRound % 8 == 0) {
 			spawnMonster();
 		}
-		io.printFullValorMap((ValorMap) getMap());
 		boolean continueGame = playerTurn();
 		System.out.println("===============================================");
 		if(continueGame) {
@@ -237,8 +236,11 @@ public class ValorGame extends RPGGame {
 					firstMove = true;
 				}
 
-				System.out.println("It is " + player.getName() + "(" + player.getIcon() + ") turn to move.");
-
+				System.out.println("It is " + h.getName() + " turn to move.");
+				System.out.println("Location: ");
+				System.out.println("\tLane : " + h.getLocation().getHome_lane());
+				System.out.println("\tRow : " + h.getLocation().getRow());
+				System.out.println("\tCol : " + h.getLocation().getCol());
 
 				String choice = io.choiceValorMenu();
 				switch (choice) {
