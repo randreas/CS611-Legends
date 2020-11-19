@@ -542,13 +542,13 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		if(direction.equals("W")) {
 			for(int j = this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1); j < this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
 				if(((ValorSpace) world.getMap()[this.getLocation().getRow()][j]).containMonster()) {
-					return false;
+					return true;
 				}
 			}
-			return true;
+			return false;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 
