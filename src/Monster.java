@@ -85,15 +85,15 @@ public abstract class Monster extends Character implements Attacker{
 
 	public boolean enemyBlock(ValorMap world, String direction) {
 		if(direction.equals("S")) {
-			for(int j = this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1); j < this.getLocation().getCurrent_lane() * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
+			for(int j = (this.getLocation().getCurrent_lane() - 1) * (world.getLaneSize() + 1); j < (this.getLocation().getCurrent_lane() - 1) * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {
 				if(((ValorSpace) world.getMap()[this.getLocation().getRow()][j]).containHero()) {
-					return false;
+					return true;
 				}
 			}
-			return true;
+			return false;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 
