@@ -558,4 +558,58 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		}
 	}
 
+	/*
+	 * Function to call attack sequence
+	 */
+	public void attackSequence( ArrayList<Character> enemies) {
+		System.out.println("Time to attack");
+		ArrayList<Monster> monsters_list = new ArrayList<>();
+		for(Character c : enemies) {
+			monsters_list.add((Monster) c);
+		}
+		io.printMonsters(monsters_list);
+		int monster_choice = io.parseMonsterChoice(monsters_list);
+		while (monster_choice == -1) {
+			System.out.println("Invalid input of monster choice. Please try again.");
+			monster_choice = io.parseMonsterChoice(monsters_list);
+		}
+		boolean attack_sucess = attack(monsters_list.get(monster_choice));
+		if(attack_sucess) {
+			System.out.println("Attack success");
+			io.printAttackScene(this,monsters_list.get(monster_choice),calculateDmg(monsters_list.get(monster_choice)));
+		} else {
+			System.out.println("The monster dodges this attack");
+			io.printDodgeScene(monsters_list.get(monster_choice));
+		}
+	}
+
+	/*
+	 * Function to call casting spell sequence
+	 */
+	public void spellSequence(ArrayList<Character> enemies) {
+		System.out.println("Time to spell cast");
+		io.printSpellList(getInventory().getSpellList());
+		int spell_choice = io.parseSpellChoice(getInventory().getSpellList());
+		while(spell_choice == -1) {
+			System.out.println("Invalid input of spell choice. Please try again.");
+			spell_choice = io.parseSpellChoice(getInventory().getSpellList());
+		}
+		ArrayList<Monster> monsters_list = new ArrayList<>();
+		for(Character c : enemies) {
+			monsters_list.add((Monster) c);
+		}
+		io.printMonsters(monsters_list);
+		int monster_choice = io.parseMonsterChoice(monsters_list);
+		while (monster_choice == -1) {
+			System.out.println("Invalid input of monster choice. Please try again.");
+			monster_choice = io.parseMonsterChoice(monsters_list);
+		}
+		boolean spell_success = spellCast(getInventory().getSpellList().get(spell_choice), monsters_list.get(monster_choice));
+		if(spell_success) {
+			io.printSpellScene(this,monsters_list.get(monster_choice),getInventory().getSpellList().get(spell_choice),spellDamage(getInventory().getSpellList().get(spell_choice),monsters_list.get(monster_choice)));
+		} else {
+			io.printDodgeScene(monsters_list.get(monster_choice));
+		}
+	}
+
 }

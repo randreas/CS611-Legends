@@ -8,9 +8,10 @@ public class Weapon extends Item implements isEquipable{
 	private int handWield;
 	private int weaponDmg;
 	private boolean equipped;
+	private BigDecimal price;
 	
 	public Weapon(String name, BigDecimal price, int minLevelReq, int weaponDmg, int handWield) {
-		super(name, price, minLevelReq);
+		super(name, minLevelReq);
 		// TODO Auto-generated constructor stub
 		this.weaponDmg = weaponDmg;
 		this.handWield = handWield;
@@ -73,12 +74,20 @@ public class Weapon extends Item implements isEquipable{
 			}
 		}
 	}
-	
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	public BigDecimal getSellPrice() {
+		return price.multiply(new BigDecimal("0.5"));
+	}
 	/*
 	 * Function to clone this instance of weapon
 	 */
 	public Weapon clone() {
 		return new Weapon(this);
 	}
-	
+
 }

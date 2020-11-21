@@ -5,12 +5,11 @@ import java.math.BigDecimal;
  */
 public abstract class Item {
 	private String name;
-	private BigDecimal price;
+
 	private int minLevelReq;
 	
-	public Item(String name, BigDecimal price, int minLevelReq) {
+	public Item(String name, int minLevelReq) {
 		this.name = name;
-		this.price = price;
 		this.minLevelReq = minLevelReq;
 	}
 	
@@ -18,7 +17,6 @@ public abstract class Item {
 		// TODO Auto-generated constructor stub
 		if(item != null) {
 			this.name = item.getName();
-			this.price = item.getPrice();
 			this.minLevelReq = item.getMinLevelReq();
 		}
 	}
@@ -29,12 +27,7 @@ public abstract class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public BigDecimal getPrice() {
-		return price;
-	}
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+
 	public int getMinLevelReq() {
 		return minLevelReq;
 	}

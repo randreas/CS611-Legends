@@ -554,7 +554,7 @@ public class ioUtility {
 			for(int i = 0; i < 24-m.getName().length(); i++) {
 				System.out.printf(" ");
 			}
-			System.out.printf( m.getHp() + "\t" + m.getStrength() + "\t" + m.getDefense() + "\t"
+			System.out.printf( m.getHp() + "\t\t" + m.getStrength() + "\t\t" + m.getDefense() + "\t\t\t"
 					+ m.getAgility() );
 			
 			System.out.println();

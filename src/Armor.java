@@ -3,15 +3,17 @@ import java.math.BigDecimal;
 /*
  * Armor.java - armor class that extends item and implements isEquipable
  */
-public class Armor extends Item implements isEquipable {
+public class Armor extends Item implements isEquipable, isSellable {
 	
 	private boolean equipped;
 	private int damagePrevention;
+	private BigDecimal price;
 	
 	public Armor(String name, BigDecimal price, int minLevelReq, int damagePrevention) {
-		super(name, price, minLevelReq);
+		super(name, minLevelReq);
 		this.damagePrevention = damagePrevention;
 		this.equipped = false;
+		this.price = price;
 	}
 	
 	
@@ -66,7 +68,18 @@ public class Armor extends Item implements isEquipable {
 			}
 		}
 	}
-	
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+
+	public BigDecimal getSellPrice() {
+		return price.multiply(new BigDecimal("0.5"));
+	}
+
 	/*
 	 * Function to clone this instance of armor
 	 */

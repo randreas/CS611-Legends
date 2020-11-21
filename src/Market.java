@@ -88,14 +88,14 @@ public class Market {
 					Item item = (Item) list.get(selected);
 					if(item.getMinLevelReq() > h.getLevel()) {
 						System.out.println("Unable to purchase weapon. Minimum level required to purchase this item = " + item.getMinLevelReq());
-					} else if (item.getPrice().compareTo(h.getWallet()) > 0) {
+					} else if (((isSellable)item).getPrice().compareTo(h.getWallet()) > 0) {
 						System.out.println("Unable to purchase weapon." + h.getName() + " Does not have enough funds");
 					} else {
 						if(item instanceof Weapon || item instanceof Armor || item instanceof Spell) {
 							if(h.getInventory().containsSingleItem(item)) {
 								System.out.println("You have purchased this equipment. You do not need more");
 							} else {
-								h.setWallet(h.getWallet().subtract(item.getPrice()));
+								h.setWallet(h.getWallet().subtract(((isSellable)item).getPrice()));
 								if(item instanceof Armor) {
 									h.addItemIntoInventory(((Armor)item).clone());
 								} else if(item instanceof Weapon) {
@@ -107,7 +107,7 @@ public class Market {
 								
 							}
 						} else {
-							h.setWallet(h.getWallet().subtract(item.getPrice()));
+							h.setWallet(h.getWallet().subtract(((isSellable)item).getPrice()));
 							
 								h.addItemIntoInventory(item);
 							
@@ -215,7 +215,7 @@ public class Market {
 						
 					}
 						
-					h.setWallet(h.getWallet().add(item.getPrice().multiply(new BigDecimal("0.5"))));
+					h.setWallet(h.getWallet().add(((isSellable)item).getSellPrice()));
 					
 				}
 				System.out.println("Would you like to sell other items for " + h.getName() + "? (Y/N)");

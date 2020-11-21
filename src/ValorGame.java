@@ -233,6 +233,7 @@ public class ValorGame extends RPGGame {
 	 */
 	public boolean playerTurn() {
 		player.printPlayer();
+		io.printMonsters(monstersOnMap);
 		for (Hero h : player.getHeroes()) {
 			boolean isValidMove = false;
 			boolean hasMoved = false;
@@ -311,26 +312,7 @@ public class ValorGame extends RPGGame {
 							if (enemies.size() == 0) {
 								System.out.println("No enemies to attack");
 							} else {
-								//TODO: Choose enemy to attack
-								System.out.println("Time to attack");
-								ArrayList<Monster> monsters_list = new ArrayList<>();
-								for(Character c : enemies) {
-									monsters_list.add((Monster) c);
-								}
-								io.printMonsters(monsters_list);
-								int monster_choice = io.parseMonsterChoice(monsters_list);
-								while (monster_choice == -1) {
-									System.out.println("Invalid input of monster choice. Please try again.");
-									monster_choice = io.parseMonsterChoice(monsters_list);
-								}
-								boolean attack_sucess = h.attack(monsters_list.get(monster_choice));
-								if(attack_sucess) {
-									System.out.println("Attack success");
-									io.printAttackScene(h,monsters_list.get(monster_choice),h.calculateDmg(monsters_list.get(monster_choice)));
-								} else {
-									System.out.println("The monster dodges this attack");
-									io.printDodgeScene(monsters_list.get(monster_choice));
-								}
+								h.attackSequence(enemies);
 								hasMoved = true;
 							}
 
@@ -345,30 +327,7 @@ public class ValorGame extends RPGGame {
 							if (enemies.size() == 0) {
 								System.out.println("No enemies to cast spell");
 							} else {
-								//TODO: Choose enemy to spell
-								System.out.println("Time to spell cast");
-								io.printSpellList(h.getInventory().getSpellList());
-								int spell_choice = io.parseSpellChoice(h.getInventory().getSpellList());
-								while(spell_choice == -1) {
-									System.out.println("Invalid input of spell choice. Please try again.");
-									spell_choice = io.parseSpellChoice(h.getInventory().getSpellList());
-								}
-								ArrayList<Monster> monsters_list = new ArrayList<>();
-								for(Character c : enemies) {
-									monsters_list.add((Monster) c);
-								}
-								io.printMonsters(monsters_list);
-								int monster_choice = io.parseMonsterChoice(monsters_list);
-								while (monster_choice == -1) {
-									System.out.println("Invalid input of monster choice. Please try again.");
-									monster_choice = io.parseMonsterChoice(monsters_list);
-								}
-								boolean spell_success = h.spellCast(h.getInventory().getSpellList().get(spell_choice), monsters_list.get(monster_choice));
-								if(spell_success) {
-									io.printSpellScene(h,monsters_list.get(monster_choice),h.getInventory().getSpellList().get(spell_choice),h.spellDamage(h.getInventory().getSpellList().get(spell_choice),monsters_list.get(monster_choice)));
-								} else {
-									io.printDodgeScene(monsters_list.get(monster_choice));
-								}
+								h.spellSequence(enemies);
 								hasMoved = true;
 							}
 
@@ -451,6 +410,9 @@ public class ValorGame extends RPGGame {
 
 
 	}
+
+
+
 
 	/*
 	 * Function that calls actions is a character has died.
