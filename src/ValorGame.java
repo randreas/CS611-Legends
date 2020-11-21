@@ -382,12 +382,11 @@ public class ValorGame extends RPGGame {
 							while (!teleport_success) {
 								Location des = io.parseTeleportLocation((ValorMap) getMap(),h);
 								teleport_success = h.teleport(des, (ValorMap) getMap());
-								if(teleport_success) {
-									hasMoved = true;
-								} else {
-									//Teleport error
+								if(h.getMinimal_dis_row() == 1000) {
+									break;
 								}
 							}
+							io.printFullValorMap((ValorMap) this.getMap());
 						} else {
 							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
 
