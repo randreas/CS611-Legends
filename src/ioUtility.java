@@ -546,7 +546,7 @@ public class ioUtility {
 	 */
 	public void printMonsters(List<Monster> list) {
 		//Name/level/damage/defense/dodge chance
-		System.out.println("ID\tName\t\t\tHP\tDamage\tDefense\tDodge Chance");
+		System.out.println("ID\tName\t\t\t\t\tHP\t\tDamage\t\tDefense\t\tDodge Chance");
 		System.out.println("============================================================================================");
 		int id = 1;
 		for(Monster m : list) {

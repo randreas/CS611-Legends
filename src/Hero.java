@@ -412,7 +412,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		ArrayList<Character> enemy_list = new ArrayList<Character>();
 		Location l = getLocation();
 		//Check current space
-		if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()]).containHero()) {
+		if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()]).containMonster()) {
 			for (Character c :((ValorSpace)world.getMap()[l.getRow()][l.getCol()]).getChars()) {
 				if(c instanceof Monster) {
 					enemy_list.add((Monster) c);
@@ -422,8 +422,8 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 		//check for front
 		if(l.getRow() < world.getRows()-1) {
-			if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()]).containHero()) {
-				for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()]).getChars()) {
+			if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()]).containMonster()) {
+				for (Character c :((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()]).getChars()) {
 					if(c instanceof Monster) {
 						enemy_list.add((Monster) c);
 					}
@@ -432,8 +432,8 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 			//check diagonal front left
 			if(l.getCol() > 0) {
-				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()-1]).containHero()) {
-					for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()-1]).getChars()) {
+				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()-1]).containMonster()) {
+					for (Character c :((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()-1]).getChars()) {
 						if(c instanceof Monster) {
 							enemy_list.add((Monster) c);
 						}
@@ -444,8 +444,8 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 			//check diagonal front right
 			if(l.getCol() < world.getCols()-1) {
-				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()+1]).containHero()) {
-					for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()+1]).getChars()) {
+				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()-1]).containMonster()) {
+					for (Character c :((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()+1]).getChars()) {
 						if(c instanceof Monster) {
 							enemy_list.add((Monster) c);
 						}
@@ -458,7 +458,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 		//check left
 		if(l.getCol() > 0) {
-			if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()-1]).containHero()) {
+			if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()-1]).containMonster()) {
 				for (Character c :((ValorSpace)world.getMap()[l.getRow()][l.getCol()-1]).getChars()) {
 					if(c instanceof Monster) {
 						enemy_list.add((Monster) c);
@@ -470,7 +470,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 		//check right
 		if(l.getCol() < world.getCols()-1) {
-			if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()+1]).containHero()) {
+			if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()+1]).containMonster()) {
 				for (Character c :((ValorSpace)world.getMap()[l.getRow()][l.getCol()+1]).getChars()) {
 					if(c instanceof Monster) {
 						enemy_list.add((Monster) c);
