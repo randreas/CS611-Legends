@@ -63,24 +63,78 @@ public abstract class Monster extends Character implements Attacker{
 	 * e.g. c.spotEnemy(world) will return the enemy list that c can attack
 	 */
 	public ArrayList<Character> spotEnemy(ValorMap world) {
-		ArrayList<Character> enemy_list = new ArrayList<>();
-		Location current_location = this.getLocation();
-		for(int i = current_location.getRow() - 1; i <= current_location.getRow() + 1; i++) {
-			for(int j = current_location.getRow() - 1; j <= current_location.getRow() + 1; j++) {
-				if(i < 0 || j < 0 || i >= world.getRows() || j > world.getCols()) {
-					continue;
-				}
-				ValorSpace[][] map = (ValorSpace[][]) world.getMap();
-				if(map[i][j].getChars().size() > 0) {
-					for(Character c : map[i][j].getChars()) {
-						if(c instanceof Hero) {
-							enemy_list.add(c);
-						}
-					}
+		ArrayList<Character> heros = new ArrayList<>();
+		Location l = getLocation();
+		//Check current space
+		if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()]).containHero()) {
+			for (Character c :((ValorSpace)world.getMap()[l.getRow()][l.getCol()]).getChars()) {
+				if(c instanceof Hero) {
+					heros.add((Hero) c);
 				}
 			}
 		}
-		return enemy_list;
+
+		//check for front
+		if(l.getRow() < world.getRows()-1) {
+			if (((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()]).containHero()) {
+				for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()]).getChars()) {
+					if(c instanceof Hero) {
+						heros.add((Hero) c);
+					}
+				}
+			}
+
+			//check diagonal front left
+			if(l.getCol() > 0) {
+				if (((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()-1]).containHero()) {
+					for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()-1]).getChars()) {
+						if(c instanceof Hero) {
+							heros.add((Hero) c);
+						}
+					}
+				}
+
+			}
+
+			//check diagonal front right
+			if(l.getCol() < world.getCols()-1) {
+				if (((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()+1]).containHero()) {
+					for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()+1]).getChars()) {
+						if(c instanceof Hero) {
+							heros.add((Hero) c);
+						}
+					}
+				}
+
+			}
+
+		}
+
+		//check left
+		if(l.getCol() > 0) {
+			if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()-1]).containHero()) {
+				for (Character c :((ValorSpace)world.getMap()[l.getRow()][l.getCol()-1]).getChars()) {
+					if(c instanceof Hero) {
+						heros.add((Hero) c);
+					}
+				}
+			}
+
+		}
+
+		//check right
+		if(l.getCol() < world.getCols()-1) {
+			if (((ValorSpace)world.getMap()[l.getRow()][l.getCol()+1]).containHero()) {
+				for (Character c :((ValorSpace)world.getMap()[l.getRow()][l.getCol()+1]).getChars()) {
+					if(c instanceof Hero) {
+						heros.add((Hero) c);
+					}
+				}
+			}
+
+		}
+
+		return heros;
 	}
 
 	public boolean enemyBlock(ValorMap world, String direction) {

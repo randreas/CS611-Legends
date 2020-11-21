@@ -1,6 +1,9 @@
 import java.math.BigDecimal;
 import java.util.*;
 
+/*
+ * ValorGame.java - game class that runs the game functions in order for game to run.
+ */
 public class ValorGame extends RPGGame {
 	
 	private List<Hero> warriorList;
@@ -27,7 +30,10 @@ public class ValorGame extends RPGGame {
 		
 		
 	}
-	
+
+	/*
+	 * Function to initialize valor map to play on.
+	 */
 	public void initializeMap() {
 		String mode;
 		boolean isValid = false;
@@ -165,7 +171,7 @@ public class ValorGame extends RPGGame {
 			spawnMonster();
 		}
 		boolean continueGame = playerTurn();
-		System.out.println("===============================================");
+		System.out.println("==================================================================");
 		if(continueGame) {
 			monsterTurn();
 		}
@@ -625,11 +631,12 @@ public class ValorGame extends RPGGame {
 		sorcererList = p.parseSorcerers();
 		monsters = p.parseMonsters();
 		monstersOnMap = new ArrayList<>();
-		
+		itemInven = new Inventory(p.parseWeapon(),p.parseArmor(),p.parseSpell(), p.parsePotion());
 
-		
-		
-		
+
+
+
+
 	}
 
 }

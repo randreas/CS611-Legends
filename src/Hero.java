@@ -422,7 +422,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 		//check for front
 		if(l.getRow() < world.getRows()-1) {
-			if (((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()]).containHero()) {
+			if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()]).containHero()) {
 				for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()]).getChars()) {
 					if(c instanceof Monster) {
 						enemy_list.add((Monster) c);
@@ -432,7 +432,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 			//check diagonal front left
 			if(l.getCol() > 0) {
-				if (((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()-1]).containHero()) {
+				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()-1]).containHero()) {
 					for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()-1]).getChars()) {
 						if(c instanceof Monster) {
 							enemy_list.add((Monster) c);
@@ -444,7 +444,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 			//check diagonal front right
 			if(l.getCol() < world.getCols()-1) {
-				if (((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()+1]).containHero()) {
+				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()+1]).containHero()) {
 					for (Character c :((ValorSpace)world.getMap()[l.getRow()+1][l.getCol()+1]).getChars()) {
 						if(c instanceof Monster) {
 							enemy_list.add((Monster) c);
@@ -482,13 +482,15 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		return enemy_list;
 	}
 
+	/*
+	 * Function to perform teleport action. Returns true if action is valid, if not return false.
+	 */
 	public boolean teleport(Location destination, ValorMap world) {
 		if(destination.getRow() < 0 || destination.getCol() < 0 || destination.getRow() >= world.getRows() ||
 				destination.getCol() >= world.getCols()) {
 			System.out.println("Invalid action! You are teleporting out of the map.");
 			return false;
 		}
-//		ValorSpace[][] map = (ValorSpace[][])world.getMap();
 		if(((ValorSpace)world.getMap()[destination.getRow()][destination.getCol()]) instanceof InaccessibleSpace) {
 			System.out.println("Invalid action! You can't teleport to a inaccessible place.");
 			return false;
@@ -517,6 +519,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 				}
 			}
 		}
+
 		this.getLocation().setCurrent_lane(destination.getCurrent_lane());
 		this.getLocation().setRow(destination.getRow());
 		this.getLocation().setCol(destination.getCol());
@@ -538,6 +541,9 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 		this.minimal_dis_row = minimal_dis_row;
 	}
 
+	/*
+	 * Function to check if enemy is blocking the way.
+	 */
 	public boolean enemyBlock(ValorMap world, String direction) {
 		if(direction.equals("W")) {
 			for(int j = (this.getLocation().getCurrent_lane() - 1) * (world.getLaneSize() + 1); j < (this.getLocation().getCurrent_lane() - 1) * (world.getLaneSize() + 1) + world.getLaneSize(); j++) {

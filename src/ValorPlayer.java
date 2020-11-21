@@ -1,5 +1,8 @@
 import java.util.*;
 
+/*
+ * ValorPlayer.java - class that creates a valor player and extends Player
+ */
 public class ValorPlayer extends Player {
 	//Hashmap to track the hero and where his original lane is.
 	private ArrayList<Hero> heroes;

@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 
 /*
- * ioUtility.java - a java file that handles a majority of all the inputs and outputs for legends
+ * ioUtility.java - a java file that handles a majority of all the inputs and outputs for Valor
  */
 
 public class ioUtility {
@@ -41,7 +41,7 @@ public class ioUtility {
 		printASCIIArt("WELCOME");
 		String string = "¯\\\\_(ツ)_/¯";
 		StandardCharsets.UTF_8.encode(string);
-		System.out.println("\t<------------------------- Welcome to the World of Legends and Monsters ---------------------->");
+		System.out.println("\t<------------------------------ Welcome to the World of Valor -------------------------------->");
 		System.out.println("\t<                                                                                             >");
 		System.out.println("\t<    You mysteriously teleported into the mysterious world where gods and monster lived,      >");
 		System.out.println("\t<    while coding for your final project that you spent the last 3 weeks procrastinating.     >");
@@ -75,25 +75,7 @@ public class ioUtility {
 		return num;
 	}
 	
-	/*
-	 * Function for user to parse number of players in Legends Game.
-	 */
-	public int parseNumPlayers() {
-		boolean validParse = false;
-		System.out.println("How many players are playing Legends of Heroes? (1-4)");
-		
-		while(!validParse) {
-			int num = parseInt();
-			if(num < 1 || num > 4) {
-				printErrorParse();
-			} else {
-				validParse = true;
-				return num;
-			}
-		}
-		return -1;
-		
-	}
+
 	
 	/*
 	 * Function to parse yes or no options
@@ -266,6 +248,7 @@ public class ioUtility {
 	 */
 	public String choiceValorMenu() {
 		System.out.println("What would you like to do?");
+		System.out.print(ConsoleColors.BLUE_BOLD_BRIGHT);
 		System.out.println("Move (W/A/S/D)");
 		System.out.println("Check Hero Info (I)");
 		System.out.println("Check Inventory (E)");
@@ -276,6 +259,7 @@ public class ioUtility {
 		System.out.println("Back to Nexus (B)");
 		System.out.println("End Turn (T)");
 		System.out.println("Quit (Q)");
+		System.out.println(ConsoleColors.RESET);
 
 		String s = parseString().toUpperCase();
 		boolean isValidString  = false;
@@ -328,7 +312,7 @@ public class ioUtility {
 	public void printWeaponShop(List<Weapon> list, boolean isBuy) {
 		System.out.println("Weapon List");
 		//String name, BigDecimal price, int minLevelReq, BigDecimal weaponDmg, int handWield
-		System.out.println("ID\tName\t\tPrice\tMin Level \tDamage\tHands to Wield");
+		System.out.println("ID\tName\t\t\t\tPrice\t\tMin Level \t\tDamage\t\tHands to Wield");
 		System.out.println("============================================================================================");
 		int id = 1;
 		for(Weapon w : list) {
@@ -384,7 +368,7 @@ public class ioUtility {
 	 */
 	public void printArmorShop(List<Armor> list, boolean isBuy) {
 		System.out.println("Armor List");
-		System.out.println("ID\tName\t\t\tPrice\tMin Level \tDamage Prevention");
+		System.out.println("ID\tName\t\t\t\t\tPrice\t\tMin Level\t\tDamage Prevention");
 		System.out.println("============================================================================================");
 		int id = 1;
 		for(Armor a : list) {
@@ -412,7 +396,7 @@ public class ioUtility {
 	public void printPotionShop(List<Potion> list, boolean isBuy) {
 		System.out.println("Potion List");
 		//String name, BigDecimal price, int minLevelReq, BigDecimal weaponDmg, int handWield
-		System.out.println("ID\tName\t\tPrice\tMin Level\tIncrease\tAttributes");
+		System.out.println("ID\tName\t\t\t\tPrice\t\tMin Level\t\tIncrease\t\tAttributes");
 		System.out.println("============================================================================================");
 		int id = 1;
 		for(Potion p : list) {
@@ -771,29 +755,12 @@ public class ioUtility {
 		}
 	}
 	
-	/*
-	 * Function to print legend for the map
-	 */
-	public void printLegend(List<LegendsPlayer> playerList) {
-		System.out.print(ConsoleColors.BLACK_BRIGHT);
-		System.out.println(" --- Legend --- ");
-	
-		System.out.println(" M = Market");
-		System.out.println(" # = Blocked Space");
-		System.out.println(" <Blank> = Common Space");
-		for(LegendsPlayer p : playerList) {
-			System.out.println(" " + p.getIcon() +  " = " + p.getName() + " Current Location=(" + (p.getRowLoc()+1) + "," + (p.getColLoc()+1) + ")");
-		}
-		System.out.println();
-		System.out.println();
-		System.out.print(ConsoleColors.RESET);
-	}
+
 	
 	/*
 	 * Function for user to parse map size to create proper size of map
 	 */
 	public int parseMapSize() {
-		// TODO Auto-generated method stub
 		int size = -1;
 		boolean isValid = false;
 		while(!isValid) {
@@ -807,8 +774,10 @@ public class ioUtility {
 		}
 		return size;
 	}
-	
-	
+
+	/*
+	 * Function to get print outer cell layout
+	 */
 	public  String getOuterCellStr(char c){
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < 2; i++) {
@@ -818,10 +787,16 @@ public class ioUtility {
         return str.toString();
     }
 
+    /*
+	 * Function to get a current cell component layout
+	 */
     public  String getInnerCellStr(String component){
         return "| " + component + " |   ";
     }
-    
+
+	/*
+	 * Function to print out a current cell component
+	 */
 	public String getCellComponent(ValorMap map, int row, int col){
 		ValorSpace space = (ValorSpace) map.getMap()[row][col];
 		ArrayList<Character> chars = space.getChars();
@@ -845,14 +820,20 @@ public class ioUtility {
 	    
 	    return ret;
     }
-	
+
+	/*
+	 * Function to print out inner cell of map
+	 */
 	public void createInnerCell(ValorMap map, List<StringBuilder> printableMap, int row, int col) {
 		String component = getCellComponent(map,row/3, col);
         if (map.getMap()[row/3][col] instanceof InaccessibleSpace)
             component = "X X X";
         printableMap.get(row).append(getInnerCellStr(component));
     }
-	
+
+	/*
+	 * Function to create outer cell of map
+	 */
 	public  void createOutterCell(ValorMap map, List<StringBuilder> printableMap, int row, int col) {
         Space s = map.getMap()[row/3][col];
         
@@ -884,7 +865,9 @@ public class ioUtility {
 		
         
     }
-	
+	/*
+	 * Function to print out entire valor map.
+	 */
 	public void printFullValorMap(ValorMap map) {
 		int numCols = map.getCols();
 		int numRows = map.getRows();
@@ -928,7 +911,9 @@ public class ioUtility {
 	}
 	
 
-
+	/*
+	 * Function to get location of nexus in the lane. Returns a random location of the nexus.
+	 */
 	public Location getNexusLocation(ValorMap map, int lane) {
 		boolean isValid = false;
 		int col = 0;
@@ -945,7 +930,10 @@ public class ioUtility {
 		Location l = new Location(lane,lane,map.getRows()-1, col);
 		return l;
 	}
-	
+
+	/*
+	 * Function to get a random cell in the row.
+	 */
 	public int getRandomCellinRow(ValorMap map, int lane) {
 		Random r = new Random();
 		int col = r.nextInt(map.getLaneSize());
@@ -953,6 +941,9 @@ public class ioUtility {
 		return col;
 	}
 
+	/*
+	 * Function for user to parse where he would like to teleport to.
+	 */
 	public Location parseTeleportLocation(ValorMap world, Hero h) {
 		boolean isValid = false;
 		int lane = 0;
@@ -1002,7 +993,9 @@ public class ioUtility {
 		return destination;
 	}
 
-
+	/*
+	 * Function to print out selected hero current location.
+	 */
 	public void printHeroLocation(Hero h) {
 		System.out.println(h.getName() + " Location: ");
 		System.out.println("\tLane : " + h.getLocation().getCurrent_lane());

@@ -15,25 +15,7 @@ public class Market {
 		this.inventory = iv;
 	}
 	
-	/*
-	 * function for player to choose which heroes would like to enter the store
-	 */
-	public void shop( LegendsPlayer p) {
-		System.out.println("Which hero would like to enter the store? 0 - Exit");
-		io.playSound("shop");
-		io.printHeroes(p.getHeroes());
-		
-		int res = io.parseHeroId(p.getHeroes(), true);
-		if(res < 0) {
-			return;
-		} else {
-			Hero h = p.getHeroes().get(res);
-			buySell(p,h,io);
-			shop(p);
-		}
-		
-		
-	}
+
 
 
 	public void shop( Hero h ) {
@@ -43,7 +25,7 @@ public class Market {
 	/*
 	 * Function to choose whether a hero buys or sells in the market
 	 */
-	public void buySell(LegendsPlayer p, Hero h, ioUtility io) {
+	public void buySell(ValorPlayer p, Hero h, ioUtility io) {
 		System.out.println("Would you like to buy or sell an item for " + h.getName() +"?");
 		System.out.println("Exit (0)");
 		System.out.println("Buy (1)");
@@ -69,7 +51,7 @@ public class Market {
 /*
  * function for player to buy an item for a hero
  */
-  	public void buy(LegendsPlayer p, Hero h, ioUtility io) {
+  	public void buy(ValorPlayer p, Hero h, ioUtility io) {
  
 		
 			boolean yn = true;
@@ -150,7 +132,7 @@ public class Market {
   	/*
   	 * function for player to sell an item for a hero
   	 */
-  	public void sell(LegendsPlayer p,Hero h, ioUtility io) {
+  	public void sell(ValorPlayer p,Hero h, ioUtility io) {
 		
 		
 			boolean yn = true;
