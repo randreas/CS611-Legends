@@ -211,7 +211,10 @@ public class ValorGame extends RPGGame {
 
 			int colSpawn = io.getRandomCellinRow((ValorMap) getMap(), i+1);
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
-			Location loc = new Location(i+1,0,colSpawn, colSpawn);
+			Location loc = new Location(i+1,i+1,0, colSpawn);
+			System.out.println("Spawning monster " + m.getName());
+			System.out.println("Row " + loc.getRow());
+			System.out.println("Col " + loc.getCol());
 			m.setLocation(loc);
 			monstersOnMap.add(m);
 			s.enterSpace(m);
@@ -223,6 +226,7 @@ public class ValorGame extends RPGGame {
 	 * Function that prompts users what actions to take, check if action is valid, perform action
 	 */
 	public boolean playerTurn() {
+		player.printPlayer();
 		for (Hero h : player.getHeroes()) {
 			boolean isValidMove = false;
 			boolean hasMoved = false;
@@ -231,16 +235,14 @@ public class ValorGame extends RPGGame {
 			io.playSound("map");
 
 			while (!turnEnds) {
+
 				if (!firstMove) {
 					io.printFullValorMap((ValorMap) getMap());
 					firstMove = true;
 				}
 
 				System.out.println("It is " + h.getName() + " turn to move.");
-				System.out.println("Location: ");
-				System.out.println("\tLane : " + h.getLocation().getHome_lane());
-				System.out.println("\tRow : " + h.getLocation().getRow());
-				System.out.println("\tCol : " + h.getLocation().getCol());
+				io.printHeroLocation(h);
 
 				String choice = io.choiceValorMenu();
 				switch (choice) {
@@ -369,16 +371,35 @@ public class ValorGame extends RPGGame {
 						}
 						break;
 					case "F":
+						if (!hasMoved) {
+							boolean teleport_success = false;
+							while (!teleport_success) {
+								Location des = io.parseTeleportLocation((ValorMap) getMap(),h);
+								teleport_success = h.teleport(des, (ValorMap) getMap());
+								if(teleport_success) {
+									hasMoved = true;
+								} else {
+									//Teleport error
+								}
+							}
+						} else {
+							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
 
-						boolean teleport_success = false;
-						while (!teleport_success) {
-							Location des = io.parseTeleportLocation((ValorMap) getMap());
-							teleport_success = h.teleport(des, (ValorMap) getMap());
 						}
 						break;
 					case "B":
 						//Back
-						player.back(h, (ValorMap) getMap());
+						if (!hasMoved) {
+							boolean back_success = player.back(h, (ValorMap) getMap());
+							if(back_success) {
+								hasMoved = true;
+							} else {
+								System.out.println("Hero cannot back while in his original lane and nexus.");
+							}
+						} else {
+							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
+
+						}
 						break;
 				}
 

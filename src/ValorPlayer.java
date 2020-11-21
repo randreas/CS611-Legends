@@ -33,6 +33,10 @@ public class ValorPlayer extends Player {
 	 */
 	public boolean back(Hero h, ValorMap map) {
 		Location currLoc = h.getLocation();
+		if(currLoc.getCurrent_lane() == h.getLocation().getHome_lane() && currLoc.getRow() == 0) {
+			//If hero is currently is in home lane and in base, cannot back
+			return false;
+		}
 		int ogLane = h.getLocation().getHome_lane();
 		ioUtility io = new ioUtility();
 		Location nexusLoc = io.getNexusLocation(map,ogLane);
@@ -54,7 +58,7 @@ public class ValorPlayer extends Player {
 		int colLoc = l.getCol();
 		if(dir.equals("W")) {
 			if((rowLoc - 1) >= 0) {
-				if(map.getMap()[rowLoc - 1][colLoc] instanceof BlockedSpace) {
+				if(map.getMap()[rowLoc - 1][colLoc] instanceof InaccessibleSpace) {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
@@ -88,7 +92,7 @@ public class ValorPlayer extends Player {
 			}
 		} else if(dir.equals("S")) {
 			if((rowLoc + 1) < map.getRows()) {
-				if(map.getMap()[rowLoc + 1][colLoc] instanceof BlockedSpace) {
+				if(map.getMap()[rowLoc + 1][colLoc] instanceof InaccessibleSpace) {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
@@ -114,7 +118,7 @@ public class ValorPlayer extends Player {
 			}
 		} else if(dir.equals("A")) {
 			if(colLoc - 1 >= 0) {
-				if(map.getMap()[rowLoc][colLoc -1] instanceof BlockedSpace) {
+				if(map.getMap()[rowLoc][colLoc -1] instanceof InaccessibleSpace) {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {
@@ -140,7 +144,7 @@ public class ValorPlayer extends Player {
 			}
 		} else if(dir.equals("D")) {
 			if(colLoc + 1 < map.getCols()) {
-				if(map.getMap()[rowLoc][colLoc+1] instanceof BlockedSpace) {
+				if(map.getMap()[rowLoc][colLoc+1] instanceof InaccessibleSpace) {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
 				} else {

@@ -488,16 +488,16 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 			System.out.println("Invalid action! You are teleporting out of the map.");
 			return false;
 		}
-		ValorSpace[][] map = (ValorSpace[][])world.getMap();
-		if(map[destination.getRow()][destination.getCol()] instanceof InaccessibleSpace) {
+//		ValorSpace[][] map = (ValorSpace[][])world.getMap();
+		if(((ValorSpace)world.getMap()[destination.getRow()][destination.getCol()]) instanceof InaccessibleSpace) {
 			System.out.println("Invalid action! You can't teleport to a inaccessible place.");
 			return false;
 		}
-		if(map[destination.getRow()][destination.getCol()].getChars().size() >= 2) {
+		if(((ValorSpace)world.getMap()[destination.getRow()][destination.getCol()]).getChars().size() >= 2) {
 			System.out.println("Invalid action! You can't teleport to a cell which is full.");
 			return false;
 		}
-		if(map[destination.getRow()][destination.getCol()].containHero()) {
+		if(((ValorSpace)world.getMap()[destination.getRow()][destination.getCol()]).containHero()) {
 			System.out.println("Invalid action! You can't teleport to a cell which already occupied by a hero.");
 			return false;
 		}

@@ -171,7 +171,7 @@ public class ioUtility {
 	 * Function to print heroes list 
 	 */
 	public void printHeroes(List<Hero> list) {
-		System.out.println("ID\tName\t\t\tLevel\tHP\tMana\tStrength\tDefense\t\tAgility\t\tDex\tMoney\tExp");
+		System.out.println("ID\tName\t\t\t\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tDefense\t\t\tAgility\t\t\tDex\t\tMoney\t\tExp");
 		System.out.println("===================================================================================================================");
 		int id = 1;
 		for(Hero h : list) {
@@ -180,10 +180,11 @@ public class ioUtility {
 			for(int i = 0; i < 24-h.getName().length(); i++) {
 				System.out.printf(" ");
 			}
-			System.out.println(h.getLevel() + "\t" + h.getHp() + "\t" + h.getMana() + "\t"+ h.getStrength() + "\t\t"
-					+ h.getDefense() + "\t\t"
+			System.out.println(h.getLevel() + "\t\t" + h.getHp() + "\t\t" + h.getMana() + "\t\t"+
+					h.getStrength() + "\t\t\t"
+					+ h.getDefense() + "\t\t\t"
 					+ h.getAgility()
-					+ "\t\t" + h.getDexterity() + "\t" + h.getWallet().toString() + "\t"+ h.getExp());
+					+ "\t\t\t" + h.getDexterity() + "\t\t" + h.getWallet().toString() + "\t\t"+ h.getExp());
 		
 			
 			
@@ -952,17 +953,27 @@ public class ioUtility {
 		return col;
 	}
 
-	public Location parseTeleportLocation(ValorMap world) {
+	public Location parseTeleportLocation(ValorMap world, Hero h) {
 		boolean isValid = false;
 		int lane = 0;
 		while(!isValid) {
-			System.out.println("Please select the lane of destination. (1-" + world.getNumLanes() + ")" );
-			lane = parseInt();
-			if(lane < 0 || lane > world.getNumLanes()) {
-				printErrorParse();
+			if(h.getLocation().getCurrent_lane() != h.getLocation().getHome_lane()) {
+				//If hero is not in original lane, he has to TP back to his original lane
+				System.out.println("Hero is teleporting to his home lane.");
+				lane = h.getLocation().getHome_lane();
 			} else {
-				isValid = true;
+				System.out.println("Please select the lane of destination. (1-" + world.getNumLanes() + ")" );
+				lane = parseInt();
+				if(lane < 0 || lane > world.getNumLanes()) {
+					printErrorParse();
+				} else if (lane == h.getLocation().getCurrent_lane() )  {
+					System.out.println("Hero cannot teleport to his own lane");
+				}
+				else {
+					isValid = true;
+				}
 			}
+
 		}
 		isValid = false;
 		int row = 0;
@@ -990,6 +1001,13 @@ public class ioUtility {
 		Location destination = new Location(lane, lane, row, col);
 		return destination;
 	}
-	
+
+
+	public void printHeroLocation(Hero h) {
+		System.out.println(h.getName() + " Location: ");
+		System.out.println("\tLane : " + h.getLocation().getCurrent_lane());
+		System.out.println("\tRow : " + (h.getLocation().getRow() + 1));
+		System.out.println("\tCol : " + (h.getLocation().getCol() + 1));
+	}
 	
 }
