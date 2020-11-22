@@ -59,6 +59,8 @@ public class ValorPlayer extends Player {
 	public boolean move(Hero h, Location l, String dir, ValorMap map) {
 		int rowLoc = l.getRow();
 		int colLoc = l.getCol();
+		System.out.println("location row = " + l.getRow());
+		System.out.println("location col = " + l.getCol());
 		if(dir.equals("W")) {
 			if((rowLoc - 1) >= 0) {
 				if(map.getMap()[rowLoc - 1][colLoc] instanceof InaccessibleSpace) {
@@ -95,6 +97,10 @@ public class ValorPlayer extends Player {
 			}
 		} else if(dir.equals("S")) {
 			if((rowLoc + 1) < map.getRows()) {
+				if(rowLoc + 1 == map.getRows() - 1 && h.getLocation().getCurrent_lane() != h.getLocation().getHome_lane()) {
+					System.out.println("You can't move to others' Nexus.");
+					return false;
+				}
 				if(map.getMap()[rowLoc + 1][colLoc] instanceof InaccessibleSpace) {
 					System.out.println("That area is inaccessible. Please go another way");
 					return false;
