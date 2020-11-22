@@ -943,6 +943,7 @@ public class ioUtility {
 				//If hero is not in original lane, he has to TP back to his original lane
 				System.out.println("Hero is teleporting to his home lane.");
 				lane = h.getLocation().getHome_lane();
+				isValid = true;
 			} else {
 				System.out.println("Please select the lane of destination. (1-" + world.getNumLanes() + ")" );
 				lane = parseInt();
