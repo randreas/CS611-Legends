@@ -135,12 +135,15 @@ Notes:
 
 How to run:
 -------------------------------------------------------------------------------------------------
-1. Unzip the Valor.rar using Winrar
+1. Unzip the Valor.zip.
 2. Copy the src file into a directory and cd into directory and src.
 3. You should see a src/ConfigFiles directory as well.
 4. Run the Main.java file in src
+    
     > cd <Directory>/src/
+
     > javac Main.java
+    
     > java Main
 5. Configure size of map and heroes per team.
 6. Play the game and have fun.
