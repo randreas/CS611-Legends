@@ -59,8 +59,6 @@ public class ValorPlayer extends Player {
 	public boolean move(Hero h, Location l, String dir, ValorMap map) {
 		int rowLoc = l.getRow();
 		int colLoc = l.getCol();
-		System.out.println("location row = " + l.getRow());
-		System.out.println("location col = " + l.getCol());
 		if(dir.equals("W")) {
 			if((rowLoc - 1) >= 0) {
 				if(map.getMap()[rowLoc - 1][colLoc] instanceof InaccessibleSpace) {
