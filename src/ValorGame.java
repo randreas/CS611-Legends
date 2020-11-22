@@ -102,22 +102,10 @@ public class ValorGame extends RPGGame {
 		
 		boolean validIcon = false;
 		String icon = "";
-		while(!validIcon) {
-			System.out.println(name +", please enter your desired icon:");
-			icon  = io.parseString();
-			if(icon.length() > 1) {
-				System.err.println(ConsoleColors.RED + "Icon can only 1 character long." + ConsoleColors.RESET);
-				continue;
-			}
-			if(iconList.contains(icon)) {
-				System.out.println(ConsoleColors.RED + "Icon is already selected by another player. Please enter a unique icon" + ConsoleColors.RESET);
-			} else {
-				validIcon = true;
-				iconList.add(icon);
-			}
-		}
+
+
 		
-		player = new ValorPlayer(name,icon);
+		player = new ValorPlayer(name,"X");
 
 	
 	}
@@ -179,15 +167,13 @@ public class ValorGame extends RPGGame {
 		numRound++;
 		int results = roundResult(continueGame);
 		if(results == 0) {
-
-			System.out.println("No winner");
 			gameRound();
 		} else if(results == 1) {
+			io.printASCIIArt("YOU WIN");
 			System.out.println("Player Wins");
 		} else if(results == 2) {
+			io.printASCIIArt("YOU LOSE");
 			System.out.println("Monster Wins");
-		} else {
-			System.out.println("Tie");
 		}
 	}
 	
@@ -218,8 +204,7 @@ public class ValorGame extends RPGGame {
 			ValorSpace s = (ValorSpace) getMap().getMap()[0][colSpawn];
 			Location loc = new Location(i+1,i+1,0, colSpawn);
 			System.out.println("Spawning monster " + m.getName());
-			System.out.println("Row " + loc.getRow());
-			System.out.println("Col " + loc.getCol());
+
 			m.setLocation(loc);
 			monstersOnMap.add(m);
 			s.enterSpace(m);
@@ -297,7 +282,7 @@ public class ValorGame extends RPGGame {
 						io.printFullValorMap((ValorMap) getMap());
 						break;
 					case "Q":
-						System.out.println("Player has surrendered. Monsters win");
+						System.out.println(ConsoleColors.CYAN_BOLD_BRIGHT + "Player has surrendered. Monsters win" + ConsoleColors.RESET);
 						isValidMove = true;
 						return false;
 
@@ -343,6 +328,9 @@ public class ValorGame extends RPGGame {
 								if(h.getMinimal_dis_row() == 1000) {
 									break;
 								}
+								if(teleport_success) {
+									hasMoved = true;
+								}
 							}
 							io.printFullValorMap((ValorMap) this.getMap());
 						} else {
@@ -357,7 +345,7 @@ public class ValorGame extends RPGGame {
 							if(back_success) {
 								hasMoved = true;
 							} else {
-								System.out.println("Hero cannot back while in his original lane and nexus.");
+								System.out.println( ConsoleColors.RED + "Hero cannot back while in his original lane and nexus." + ConsoleColors.RESET);
 							}
 						} else {
 							System.out.println(ConsoleColors.RED + player.getName() + " has moved. You can do other stuff or end your Turn (T)." + ConsoleColors.RESET);
