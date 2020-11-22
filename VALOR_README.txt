@@ -131,21 +131,23 @@ Notes:
 8. The heroes don't share their vision, and a hero can only see the rows lower or equal to his/her highest explored row. So a hero can only teleport to the rows (in other lanes) lower or equal to his/her highest explored row. 
 9. A hero is forbidden to move into other heroes' Nexus.
 10. Files should be kept in src Folder. ConfigFile directory is stored in src. Please do not change src folder name. This will mess up the parser.
-
+11. Please make sure directory and paths do not have " " <Space>, this causes issues when running on windows.
 
 How to run:
 -------------------------------------------------------------------------------------------------
 1. Unzip the Valor.zip.
 2. Copy the src file into a directory and cd into directory and src.
 3. You should see a src/ConfigFiles directory as well.
-4. Run the Main.java file in src
+4. Run the Main.java file in src for terminal based play.
     
     > cd  < Directory > /src/
 
     > javac Main.java
     
     > java Main
+    
 5. Configure size of map and heroes per team.
 6. Play the game and have fun.
 
 7. If running in Eclipse/IntelliJ, Please copy all files and directories into src.
+8. Run Main.java in the IDE.
