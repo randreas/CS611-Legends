@@ -445,7 +445,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 
 			//check diagonal front right
 			if(l.getCol() < world.getCols()-1) {
-				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()-1]).containMonster()) {
+				if (((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()+1]).containMonster()) {
 					for (Character c :((ValorSpace)world.getMap()[l.getRow()-1][l.getCol()+1]).getChars()) {
 						if(c instanceof Monster) {
 							enemy_list.add((Monster) c);

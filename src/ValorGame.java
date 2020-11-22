@@ -23,7 +23,6 @@ public class ValorGame extends RPGGame {
 	 */
 	public void startGame() {
 		initializeMap();
-		//TODO: implement code
 		initializePlayer(0);
 		chooseHeros(player);
 		gameRound();
@@ -422,10 +421,12 @@ public class ValorGame extends RPGGame {
 		if(c2.getHp() <= 0) {
 			if(c2 instanceof Hero) {
 				//If hero dies, spawn back at nexus half health, gets to buy item?
+				io.playSound("allyDie");
 				p.back((Hero)c2,(ValorMap)getMap());
 				((Hero)c2).respawn();
 			} else if (c2 instanceof Monster) {
 				//Hero c1 has killed a monster
+				io.playSound("enemyDie");
 				monstersOnMap.remove(c2);
 				((Hero)c1).gainExp();
 				BigDecimal moneyGain = new BigDecimal("100").multiply(new BigDecimal(c1.getLevel()));
@@ -531,6 +532,7 @@ public class ValorGame extends RPGGame {
 	 */
 	public int roundResult(boolean continueGame) {
 		if(!continueGame) {
+			io.playSound("defeat");
 			return 2;
 		}
 		//check top row if any heroes
@@ -562,10 +564,13 @@ public class ValorGame extends RPGGame {
 		}
 		
 		if(monsterWin && heroWin) {
+			io.playSound("victory");
 			return 1;
 		} else if(monsterWin) {
+			io.playSound("defeat");
 			return 2;
 		} else if(heroWin) {
+			io.playSound("victory");
 			return 1;
 		} 
 		return 0; 
@@ -576,7 +581,7 @@ public class ValorGame extends RPGGame {
 		super(null,"ValorGame",1);
 		io = new ioUtility();
 		io.printWelcomeMessage();
-		//io.playSound("opening");
+		io.playSound("welcome");
 		iconList = new ArrayList<>();
 		//adding default icons 
 		iconList.add("M");

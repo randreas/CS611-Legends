@@ -162,7 +162,7 @@ public class ioUtility {
 			for(int i = 0; i < 24-h.getName().length(); i++) {
 				System.out.printf(" ");
 			}
-			System.out.println(h.getLevel() + "\t\t" + h.getHp() + "\t\t" + h.getMana() + "\t\t"+
+			System.out.println(h.getLevel() + "\t\t" + h.getHp() + "\t\t" + h.getMana() + "\t\t\t"+
 					h.getStrength() + "\t\t\t"
 					+ h.getDefense() + "\t\t\t"
 					+ h.getAgility()
@@ -554,7 +554,7 @@ public class ioUtility {
 			for(int i = 0; i < 24-m.getName().length(); i++) {
 				System.out.printf(" ");
 			}
-			System.out.printf( m.getHp() + "\t\t" + m.getStrength() + "\t\t" + m.getDefense() + "\t\t\t"
+			System.out.printf( m.getHp() + "\t\t" + m.getStrength() + "\t\t\t" + m.getDefense() + "\t\t\t"
 					+ m.getAgility() );
 			
 			System.out.println();
@@ -699,29 +699,20 @@ public class ioUtility {
 		soundFile = soundFile.substring(1,soundFile.length()-4) + "src/";
 
 		switch (sound) {
-		case "choice":
-			soundFile += "ConfigFiles/opening.wav";
+		case "welcome":
+			soundFile += "ConfigFiles/Welcome.wav";
 			break;
-		case "ending":
-			soundFile += "ConfigFiles/ending.wav";
+		case "enemyDie":
+			soundFile += "ConfigFiles/EnemyDie.wav";
 			break;
-		case "shop":
-			soundFile += "ConfigFiles/shop.wav";
+		case "allyDie":
+			soundFile += "ConfigFiles/AllyDie.wav";
 			break;
-		case "monsterbattle":
-			soundFile += "ConfigFiles/monsterbattle.wav";
+		case "victory":
+			soundFile += "ConfigFiles/Victory.wav";
 			break;
-		case "battlewin":
-			soundFile += "ConfigFiles/monstervictory.wav";
-			break;
-		case "trainerbattle":
-			soundFile += "ConfigFiles/trainerBattle.wav";
-			break;
-		case "trainerbattlewin":
-			soundFile += "ConfigFiles/trainerVictory.wav";
-			break;
-		case "map":
-			soundFile += "ConfigFiles/map.wav";
+		case "defeat":
+			soundFile += "ConfigFiles/Defeat.wav";
 			break;
 		}
 
@@ -737,9 +728,9 @@ public class ioUtility {
 			// open audioInputStream to the clip
 			clip.open(audioStream);
 
-		//	clip.loop(Clip.LOOP_CONTINUOUSLY);
+			//clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-		//	clip.start();
+			clip.start();
 		} catch (Exception e) {
 			printErrorParse();
 		}
