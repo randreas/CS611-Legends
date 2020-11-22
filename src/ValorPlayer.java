@@ -5,18 +5,18 @@ import java.util.*;
  */
 public class ValorPlayer extends Player {
 	//Hashmap to track the hero and where his original lane is.
-	private ArrayList<Hero> heroes;
+	private HeroTeam heroes;
 	
 	public ValorPlayer() {
 		super();
-		heroes = new ArrayList<> ();
+		heroes = new HeroTeam ();
 		
 	}
 	
 	public ValorPlayer(String name, String icon) {
 		// TODO Auto-generated constructor stub
 		super(name,icon);
-		heroes = new ArrayList<> ();
+		heroes = new HeroTeam ();
 		
 	}
 
@@ -28,7 +28,7 @@ public class ValorPlayer extends Player {
 
 	
 	public  ArrayList<Hero>  getHeroes() {
-		return this.heroes;
+		return this.heroes.getHeros();
 	}
 
 	/*
@@ -184,9 +184,12 @@ public class ValorPlayer extends Player {
 
 	}
 
+	/*
+	 * Function to print out a player's team
+	 */
 	public void printPlayer() {
 		System.out.println(getName() + "'s Team:");
 		ioUtility io = new ioUtility();
-		io.printHeroes(heroes);
+		io.printHeroes(getHeroes());
 	}
 }

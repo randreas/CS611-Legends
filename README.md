@@ -74,6 +74,7 @@ StatType.java		- enum for type of stat (Hp, Mana, Strength, Dex, Def, AGI)
 
 HeroClass.java 		- enum for hero classes available
 
+HeroTeam.java       - class that creates a list of heroes in the players team.
 
 
 Space.java			- Space abstract class for a single space on the map
@@ -99,7 +100,6 @@ Market.java			- Market class that consists of shoppable items and where heroes c
 GridMap.java		- Grid map abstract class that has number of rows and cols
 
 ValorMap.java		- Map class that represents the map for legends of Valor
-
 
 Location.java		- Class that keep tracks where a unit is on the map.
 
@@ -139,6 +139,9 @@ How to run:
 2. Copy the src file into a directory and cd into directory and src.
 3. You should see a src/ConfigFiles directory as well.
 4. Run the Main.java file in src
+    > cd <Directory>/src/
+    > javac Main.java
+    > java Main
 5. Configure size of map and heroes per team.
 6. Play the game and have fun.
 

@@ -103,8 +103,6 @@ public class ValorGame extends RPGGame {
 		boolean validIcon = false;
 		String icon = "";
 
-
-		
 		player = new ValorPlayer(name,"X");
 
 	
@@ -150,10 +148,11 @@ public class ValorGame extends RPGGame {
 		}
 		
 	}
-	
+
+	/*
+	 * Function to run a round of the current game.
+	 */
 	public void gameRound() {
-
-
 		if(numRound == 1 || numRound % 8 == 0) {
 			spawnMonster();
 		}
@@ -241,6 +240,7 @@ public class ValorGame extends RPGGame {
 					case "A":
 					case "S":
 					case "D":
+						//WASD to move player
 						if (!hasMoved) {
 							Location l1 = h.getLocation();
 							isValidMove = player.move(h,h.getLocation(), choice, (ValorMap) getMap());
@@ -259,7 +259,7 @@ public class ValorGame extends RPGGame {
 						}
 						break;
 					case "E":
-
+						//Equip item for hero
 
 						System.out.println(h.getName() + "'s Inventory");
 						if (h.getInventory().isEmpty()) {
@@ -276,6 +276,7 @@ public class ValorGame extends RPGGame {
 						}
 						break;
 					case "I":
+						//Print Info of players team
 						player.printPlayer();
 						break;
 					case "M":
