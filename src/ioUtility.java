@@ -154,7 +154,7 @@ public class ioUtility {
 	 */
 	public void printHeroes(List<Hero> list) {
 		System.out.println("ID\tName\t\t\t\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tDefense\t\t\tAgility\t\t\tDex\t\tMoney\t\tExp");
-		System.out.println("===================================================================================================================");
+		System.out.println("==================================================================================================================================");
 		int id = 1;
 		for(Hero h : list) {
 
@@ -162,8 +162,8 @@ public class ioUtility {
 			for(int i = 0; i < 24-h.getName().length(); i++) {
 				System.out.printf(" ");
 			}
-			System.out.println(h.getLevel() + "\t\t" + h.getHp() + "\t\t" + h.getMana() + "\t\t\t"+
-					h.getStrength() + "\t\t\t"
+			System.out.println(h.getLevel() + "\t\t\t" + h.getHp() + "\t\t" + h.getMana() + "\t\t\t"+
+					h.getStrength() + "\t\t\t\t"
 					+ h.getDefense() + "\t\t\t"
 					+ h.getAgility()
 					+ "\t\t\t" + h.getDexterity() + "\t\t" + h.getWallet().toString() + "\t\t"+ h.getExp());
@@ -638,6 +638,7 @@ public class ioUtility {
 	 * Function to print attack scene and damage dealt
 	 */
 	public void printAttackScene(Character c1 , Character c2, int amount) {
+		printASCIIArt("ATTACK");
 		System.out.println(c1.getName() + " attacked " + c2.getName() + ". Dealt " + amount + " dmg");
 	}
 	
@@ -645,6 +646,7 @@ public class ioUtility {
 	 * Function to print spell scene and damage dealt
 	 */
 	public void printSpellScene(Character c1 , Character c2, Spell s, int amount) {
+		printASCIIArt("SPELL CAST");
 		System.out.println(c1.getName() + " used " + s.getName() + " on " + c2.getName() + ". Dealt " + amount + " dmg");
 	}
 	
@@ -652,6 +654,7 @@ public class ioUtility {
 	 * Function to print dodge scene
 	 */
 	public void printDodgeScene(Character c) {
+		printASCIIArt("DODGED");
 		System.out.println(c.getName() + " dodged the incoming attack with his godlike agility and luck");
 		
 	}
@@ -714,6 +717,9 @@ public class ioUtility {
 		case "defeat":
 			soundFile += "ConfigFiles/Defeat.wav";
 			break;
+		case "spawn":
+			soundFile += "ConfigFiles/Spawn.wav";
+			break;
 		}
 
 		if(audioStream != null && clip != null) {
@@ -727,8 +733,6 @@ public class ioUtility {
 
 			// open audioInputStream to the clip
 			clip.open(audioStream);
-
-			//clip.loop(Clip.LOOP_CONTINUOUSLY);
 
 			clip.start();
 		} catch (Exception e) {

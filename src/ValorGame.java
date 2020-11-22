@@ -182,6 +182,7 @@ public class ValorGame extends RPGGame {
 	 * Find the maxLevel of hero and spawns monsters of that same level on to the map 
 	 */
 	public void spawnMonster() {
+		io.playSound("spawn");
 		int maxLevel = 0;
 		for(Hero h : player.getHeroes()) {
 			if(h.getLevel() > maxLevel) {
@@ -223,7 +224,6 @@ public class ValorGame extends RPGGame {
 			boolean hasMoved = false;
 			boolean firstMove = false;
 			boolean turnEnds = false;
-			io.playSound("map");
 
 			while (!turnEnds) {
 
@@ -296,7 +296,8 @@ public class ValorGame extends RPGGame {
 							if (enemies.size() == 0) {
 								System.out.println("No enemies to attack");
 							} else {
-								h.attackSequence(enemies);
+								Character c = h.attackSequence(enemies);
+								characterDie(player, h, c);
 								hasMoved = true;
 							}
 
@@ -410,11 +411,17 @@ public class ValorGame extends RPGGame {
 			if(c2 instanceof Hero) {
 				//If hero dies, spawn back at nexus half health, gets to buy item?
 				io.playSound("allyDie");
+				int c2Row = c2.getLocation().getRow();
+				int c2Col = c2.getLocation().getCol();
+				((ValorSpace)getMap().getMap()[c2Row][c2Col]).exitSpace(c2);
 				p.back((Hero)c2,(ValorMap)getMap());
 				((Hero)c2).respawn();
 			} else if (c2 instanceof Monster) {
 				//Hero c1 has killed a monster
 				io.playSound("enemyDie");
+				int c2Row = c2.getLocation().getRow();
+				int c2Col = c2.getLocation().getCol();
+				((ValorSpace)getMap().getMap()[c2Row][c2Col]).exitSpace(c2);
 				monstersOnMap.remove(c2);
 				((Hero)c1).gainExp();
 				BigDecimal moneyGain = new BigDecimal("100").multiply(new BigDecimal(c1.getLevel()));

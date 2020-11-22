@@ -569,7 +569,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 	/*
 	 * Function to call attack sequence
 	 */
-	public void attackSequence( ArrayList<Character> enemies) {
+	public Character attackSequence( ArrayList<Character> enemies) {
 		System.out.println("Time to attack");
 		ArrayList<Monster> monsters_list = new ArrayList<>();
 		for(Character c : enemies) {
@@ -589,6 +589,7 @@ public abstract class Hero extends Character implements SpellCaster, Attacker, C
 			System.out.println("The monster dodges this attack");
 			io.printDodgeScene(monsters_list.get(monster_choice));
 		}
+		return monsters_list.get(monster_choice);
 	}
 
 	/*
