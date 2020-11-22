@@ -1,9 +1,11 @@
 # CS611-Legends
 Name: Richard Andreas
 BUID: U78371851
+Email: ra7296@bu.edu
 
 Name: YuChen Guo
-BUID: 
+BUID: U86016090
+Email: ycg@bu.edu
 
 Files
 ----------------------------
