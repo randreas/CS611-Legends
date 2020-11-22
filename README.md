@@ -24,12 +24,16 @@ isEquipable.java	- interface for objects that are equipable
 
 isCastable.java		- interface for objects that are castable (Spells)
 
+isSellable.java		- interface for items that are sellable
+
 Inventory.java		- inventory class that has a list of weapons, armors, spells and potions
 
 SpellType.java		- enum for types of spells
 
 
 Player.java			- player class that tracks a players name and Symbol
+
+ValorPlayer.java	- Player class that represents the player for lengends of Valor
 
 LegendsPlayer.java 	- Legends Player extends player has list of heroes and curr location on map
 
@@ -69,6 +73,22 @@ HeroClass.java 		- enum for hero classes available
 
 Space.java			- Space abstract class for a single space on the map
 
+ValorSpace.java		- Space class that represents the a single space on the map of legends of Valor
+
+BushSpace.java		- This class represents the bush space
+
+CaveSpace.java		- This class represents the cave space
+
+InaccessibleSpace.java		- This class represents the inaccessible space
+
+KoulouSpace.java			- Class that creates a koulou space that buffs heroes strength
+
+NexusSpace.java				- Class represents the Nexus
+
+PlainSpace.java				- Class represents the plain
+
+isBuffableSpace.java		- Interface for the spaces that have buff or debuff
+
 BlockedSpace.java	- blockedspace is type of space that is inaccessible
 
 MarketSpace.java	- marketspace class that extends space to show that area is a market
@@ -81,10 +101,13 @@ BattleRound.java	- battle round class for a battle between between players/monst
 
 GridMap.java		- Grid map abstract class that has number of rows and cols
 
+ValorMap.java		- Map class that represents the map for legends of Valor
+
 LegendsMap.java		- LegendsMap that extends GridMap which initializes the map itself
 
 PVPBattleRound.java	- pvp battle rond class for a battle between players
 
+Location.java		- Class that keep tracks where a unit is on the map.
 
 
 Main.java			- main java class that runs game
@@ -94,6 +117,8 @@ LegendsGame.java	- legends game which has extends rpggame that runs the legends 
 RPGGame.java		- rpggame abstract class that extends game which has a gridMap
 
 Game.java    		- abstract game class has number of players and a name
+
+ValorGame.java		- Game class which contians the game function for the legends of Valor
 
 ioUtility.java		- ioUtility class for inputs and outputs
 
@@ -113,6 +138,8 @@ Notes:
 7. Minimum size of map is 4x4 and Maximum size of map is 20x20 and is a square map.
 8. Maximum number of players is 4 and max heroes per team is 4. Due to current number of heroes parsed.
 9. Player has to Type (T) to end turn in order to end his turn after movement or other actions.
+10. The heroes don't share their vision, and a hero can only see the rows lower or equal to his/her highest explored row. So a hero can only teleport to the rows (in other lanes) lower or equal to his/her highest explored row. 
+11. A hero is forbidden to move into other heroes' Nexus.
 
 
 How to run:
