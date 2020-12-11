@@ -140,11 +140,16 @@ How to run:
 3. You should see a src/ConfigFiles directory as well.
 4. Run the Main.java file in src for terminal based play.
     
-    > cd  < Directory > /src/
-
-    > javac Main.java
+    ----Enter the file----
+    > cd  < Directory > (Not into Src directory)
     
-    > java Main
+    ----Compilation----
+    > javac src/*.java
+    
+    ----Execution------
+    > java -cp ":src" Main   //Mac & Linux
+    > java -cp ";src" App    //Windows
+
     
 5. Configure size of map and heroes per team.
 6. Play the game and have fun.

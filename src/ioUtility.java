@@ -698,8 +698,7 @@ public class ioUtility {
 	public void playSound(String sound )  {
 		 
 		// open the sound file as a Java input stream
-		String soundFile = this.getClass().getResource("").getPath();
-		soundFile = soundFile.substring(1,soundFile.length()-4) + "src/";
+		String soundFile = System.getProperty("user.dir") + "/src/";
 
 		switch (sound) {
 		case "welcome":
